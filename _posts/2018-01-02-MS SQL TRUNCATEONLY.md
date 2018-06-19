@@ -1,0 +1,43 @@
+---
+layout: post
+title: MS SQL TRUNCATEONLY
+date: 2018-01-02
+tags: MS SQL TRUNCATEONLY MS SQL TRUNCAT
+---
+
+就清理資料庫的 LOG
+
+```
+DBCC ShrinkDataBase(database_name, 30, truncateonly ) --實際釋放空間, 留30%空間
+```
+
+SQL SERVER 2008
+
+```
+USE [資料庫名稱]
+GO
+ALTER DATABASE [資料庫名稱] SET RECOVERY SIMPLE WITH NO_WAIT
+DBCC SHRINKFILE(記錄檔邏輯名稱, 1)
+ALTER DATABASE [資料庫名稱] SET RECOVERY FULL WITH NO_WAIT
+GO
+```
+
+看 ERP  廠商 清理 ....紀錄一下....
+
+```
+USE [master]
+GO
+ALTER DATABASE chicomp95 SET RECOVERY SIMPLE WITH NO_WAIT
+GO
+ALTER DATABASE chicomp95 SET RECOVERY SIMPLE
+GO
+USE chicomp95
+DBCC SHRINKFILE (N'LogFile' , 11, TRUNCATEONLY)
+GO
+USE [master]
+GO
+ALTER DATABASE chicomp95 SET RECOVERY FULL WITH NO_WAIT
+GO
+ALTER DATABASE chicomp95 SET RECOVERY FULL
+GO
+```
