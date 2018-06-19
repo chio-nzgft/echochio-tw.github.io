@@ -1,11 +1,9 @@
 ---
 layout: post
 title: move_uploaded_file failed to open stream: Permission denied
-date: 2017-08-14
-tags:  uploaded_file failed
+date: 2017-02-18
+tags: uploaded_file failed
 ---
-
-
 debug php 發現 上傳檔案異常 .....
 
 先建立一個 test.php
