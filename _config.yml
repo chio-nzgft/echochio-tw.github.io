@@ -1,5 +1,5 @@
 exclude: ["local"]
-url: http://rainzhao.com
+url: http://www.echochio.nctu.me
 permalink: /:categories/:year/:title.html
 markdown: redcarpet
 redcarpet:
