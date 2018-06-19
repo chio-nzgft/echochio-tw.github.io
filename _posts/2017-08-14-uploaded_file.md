@@ -5,9 +5,11 @@ date: 2017-08-14
 tags:  uploaded_file failed
 ---
 
+
 debug php 發現 上傳檔案異常 .....
 
 先建立一個 test.php
+
 ```
 <html>
 <body>
@@ -22,6 +24,7 @@ debug php 發現 上傳檔案異常 .....
 PHP 檔案上傳後會先放到一個暫存資料夾（tmp），一般是放到 /tmp , 當然也可在 php.ini 設定 暫存資料夾
 
 upload.php 內容如下 :
+
 ```
 <?php
 if ($_FILES["file"]["error"] > 0){
@@ -39,7 +42,7 @@ echo "暫存名稱: " . $_FILES["file"]["tmp_name"];
 然後程式改用 move_uploaded_file 將檔案移動到 upload 資料夾中
 當然 upload 資料夾要有權限例如 apache 可 write 
 
-``
+```
  <?php
 if ($_FILES["file"]["error"] > 0){
 　echo "Error: " . $_FILES["file"]["error"];
@@ -64,6 +67,7 @@ if ($_FILES["file"]["error"] > 0){
 啥 ........重開機後就有問題了, 之前裝完後都沒重開過 .......XD
 
 SElinux DISABLE ....... 就這麼簡單 ....搞了半天
+
 ```
 # cat  /etc/sysconfig/selinux
 
