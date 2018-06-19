@@ -1,0 +1,41 @@
+---
+layout: post
+title: win10 開機磁碟機 mbr 轉成 GPT
+date: 2018-03-03
+tags:  win10 mbr gpt
+---
+
+首先找到 有  DiskGenius 的 PE 例如 EasyU_
+
+調整分區大小
+
+<img src="/images/posts/win10_gpt/p1.png">
+
+設定... 將磁碟機前面保留 500M 的空間 ....設定成...轉換完重開 .....
+
+<img src="/images/posts/win10_gpt/p2.png">
+
+轉換完後空間變成
+
+<img src="/images/posts/win10_gpt/p3.png">
+
+ 設成 GUID ...就是  GPT  ......
+
+<img src="/images/posts/win10_gpt/p4.png">
+
+將前面 500M 建立 ESP/MSR
+
+<img src="/images/posts/win10_gpt/p5.png">
+ 
+ <img src="/images/posts/win10_gpt/p6.png">
+
+找到 UEFI 修護工具 , 選到那 ESP 的 HDD (就是 fat 32那個)
+
+<img src="/images/posts/win10_gpt/p7.png">
+
+BIOS 要調正確 ..... 
+我用 vm  的 player ....就是   .VMX  加上
+```
+firmware="efi"
+```
+重開就OK了 .... 
