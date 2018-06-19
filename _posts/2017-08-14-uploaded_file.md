@@ -1,0 +1,87 @@
+---
+layout: post
+title: move_uploaded_file failed to open stream: Permission denied
+date: 2017-08-14
+tags:  uploaded_file failed
+---
+
+debug php 發現 上傳檔案異常 .....
+
+先建立一個 test.php
+```
+<html>
+<body>
+<form action="upload.php" method="post" enctype="multipart/form-data">
+檔案名稱:<input type="file" name="file" id="file" /><br />
+<input type="submit" name="submit" value="上傳檔案" />
+</form>
+</body>
+</html> 
+```
+
+PHP 檔案上傳後會先放到一個暫存資料夾（tmp），一般是放到 /tmp , 當然也可在 php.ini 設定 暫存資料夾
+
+upload.php 內容如下 :
+```
+<?php
+if ($_FILES["file"]["error"] > 0){
+　echo "Error: " . $_FILES["file"]["error"];
+}else{
+echo "檔案名稱: " . $_FILES["file"]["name"]."<br/>";
+echo "檔案類型: " . $_FILES["file"]["type"]."<br/>";
+echo "檔案大小: " . ($_FILES["file"]["size"] / 1024)." Kb<br />";
+echo "暫存名稱: " . $_FILES["file"]["tmp_name"];
+}
+?>
+```
+
+我測試了沒有 Error 發生 ....
+然後程式改用 move_uploaded_file 將檔案移動到 upload 資料夾中
+當然 upload 資料夾要有權限例如 apache 可 write 
+
+``
+ <?php
+if ($_FILES["file"]["error"] > 0){
+　echo "Error: " . $_FILES["file"]["error"];
+}else{
+　echo "檔案名稱: " . $_FILES["file"]["name"]."<br/>";
+　echo "檔案類型: " . $_FILES["file"]["type"]."<br/>";
+　echo "檔案大小: " . ($_FILES["file"]["size"] / 1024)." Kb<br />";
+　echo "暫存名稱: " . $_FILES["file"]["tmp_name"];
+
+　move_uploaded_file($_FILES["file"]["tmp_name"],"upload/".$_FILES["file"]["name"]);
+}
+?> 
+```
+
+我測試了沒有 Error 發生 ....
+但是 apache log 有 move_uploaded_file failed to open stream: Permission denied
+且檔案沒有上傳到 upload 檔案夾內
+
+搞了老半天 ....美編說 ...在我做 p2v 之前正常 ...
+想了好久 ...原來是 .....之前人設單次的 SElinux DISABLE
+
+啥 ........重開機後就有問題了, 之前裝完後都沒重開過 .......XD
+
+SElinux DISABLE ....... 就這麼簡單 ....搞了半天
+```
+# cat  /etc/sysconfig/selinux
+
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=disabled
+# SELINUXTYPE= can take one of three two values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected.
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+```
+
+或許你覺得關閉 SElinux 不是一個好方式 將目錄改成 web 可存檔就好了呀 ...
+
+```
+# chcon -t httpd_sys_rw_content_t /var/www/upload -R
+```
