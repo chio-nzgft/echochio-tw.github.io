@@ -28,7 +28,7 @@ ssh 進去 ESXi 安裝 vghetto-ghettoVCB.vib
 
 ```
 esxcli software vib install -v /vmfs/volumes/datastore1/vghetto-ghettoVCB.vib -f 
-``
+```
 
 裝完後到  /opt/ghettovcb/bin/ 下會有兩個檔案:
 
