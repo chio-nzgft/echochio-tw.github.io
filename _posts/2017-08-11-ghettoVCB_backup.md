@@ -2,7 +2,7 @@
 layout: post
 title: ESXi 單機備份方案 ghettoVCB
 date: 2017-08-11
-tags:  CentOS nginx proxy
+tags:  ESXi ghettoVCB backup
 ---
 
 ESXi 定時備份到 網路上的 NFS , 
