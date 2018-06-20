@@ -8,7 +8,9 @@ tags: Esxi Docker
 先看軟體需求 
 
 Docker Host (VM) running Docker 1.13/17.03 and above
+
 vSphere ESXi 6.0+
+
 vSphere Storage (VSAN, VMFS or NFS) for ESXi host
 
 下載  vib 檔 https://bintray.com/vmware/vDVS/VIB/ 後在 ESXi 上安裝
