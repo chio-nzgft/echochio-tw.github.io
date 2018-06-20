@@ -16,6 +16,8 @@ Zentyal 安裝 keepalived  ..與  nginx proxy  那台 keepalived 作 HA
 
 可以說 nginx proxy 要運用的很多可自行運用 nginx proxy 的 loading 非常小 , 只是網路頻寬比較大 .....
 
+proxy 要安裝 ngx_stream_upstream_module ....
+
 大概的架構如下 :
 
 <img src="/images/posts/nginx/p10.png">
