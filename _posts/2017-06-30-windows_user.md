@@ -6,20 +6,32 @@ tags: windows
 ---
 
 話說以前做過 用 web 介面 , 給NOC 操作廠商遠端登入帳號建立及啟用, 停用等等 ....
+
 當然有配合遠端登入錄影 ,
+
 那時測過 RecordTS 及 ObserveIT records , 最後選ObserveIT records 
 
+
 好了不廢話 .....
+
 那就 telnet  ( 最後裝 openssh .....)
+
 到 client (Windows XP) ....為啥用 XP ...因為 XP 可多人遠端桌面 ....哈哈 ....
 
+
 下載 Universal Termsrv Patch
+
 執行 xp.reg
+
 UniversalTermsrvPatch-x86.exe (若作業系統為 64 位元版本則執行 x64.exe)
+
 按「破解」，重開機
 
 聽說後來 win7 也可多人了找 ... UniversalTermsrvPatch_20090425
+
 好像是 SP1 可以 ....SP2 就不行了 ....XD
+
+
 win7 SP2 後來的請用 
 
 https://www.echochio.nctu.me/2018/06/win7-RDP/
