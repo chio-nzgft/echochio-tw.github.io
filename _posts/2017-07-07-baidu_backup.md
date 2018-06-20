@@ -43,7 +43,7 @@ Successfully installed bypy-1.5.7 dill-0.2.7 multiprocess-0.70.5 requests-toolbe
 
 ```
 
-<img src="/images/posts/baidu_backup/p1.jpg">
+<img src="/images/posts/baidu_backup/p1.png">
 
 安裝好了就 bypy list 會連 百度叫你用網頁認證取 token
 
@@ -60,7 +60,7 @@ Authorizing/refreshing with the OpenShift server ...
 Successfully authorized
 /apps/bypy ($t $f $s $m $d):
 ```
-<img src="/images/posts/baidu_backup/p2.jpg">
+<img src="/images/posts/baidu_backup/p2.png">
 
 打入 bypy syncup 上傳 ....去網頁就看到上傳的檔案了
 
@@ -69,7 +69,7 @@ Successfully authorized
 # ls
 client_secret.json  GoUpload.json  main.go  PythonUpload.json  sql.go  up.py
 ```
-<img src="/images/posts/baidu_backup/p3.jpg">
+<img src="/images/posts/baidu_backup/p3.png">
 
 可查看比較
 ```
