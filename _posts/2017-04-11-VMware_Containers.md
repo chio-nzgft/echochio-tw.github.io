@@ -154,7 +154,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 C:\WINDOWS\system32>
 ```
 
-看到 Esxi 上 多了個 ......
+看到 Esxi 上 多了個 ...... susp ….
 
 <img src="/images/posts/Esxi_VCB/P10.png">
 
