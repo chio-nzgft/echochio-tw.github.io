@@ -5,7 +5,9 @@ date: 2017-04-18
 tags: Squid proxy
 ---
 我的 squid.conf  設定檔 ...
+
 設定 mail.demo.com 的 443 及 80 port 做 proxy 
+
 Squid Server IP 為 192.168.0.70
 
 ```
