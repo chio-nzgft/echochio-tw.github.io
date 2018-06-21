@@ -156,9 +156,9 @@ C:\WINDOWS\system32>
 
 看到 Esxi 上 多了個 ...... susp ....
 
-<img src="/images/posts/Esxi_VCB/p10.png">
+<img src="/images/posts/Esxi_VCB/P10.png">
 
-<img src="/images/posts/Esxi_VCB/p11.png">
+<img src="/images/posts/Esxi_VCB/P11.png">
 
 
 執行成果是 :
