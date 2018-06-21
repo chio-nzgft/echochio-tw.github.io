@@ -5,7 +5,7 @@ date: 2017-04-26
 tags:  unsigned android signed
 ---
 
-建立一個 meteor android hello 的 APK
+建立一個 meteor android hello 的 APK 來測試
 
 ```
 # id
