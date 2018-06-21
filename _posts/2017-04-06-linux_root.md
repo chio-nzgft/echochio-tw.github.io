@@ -22,5 +22,4 @@ exit
 reboot
 ```
 
-<img src="/images/posts/Server/p50.jpg">
- 
+<img src="/images/posts/Server/p50.png">
