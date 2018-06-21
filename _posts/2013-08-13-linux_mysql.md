@@ -2,7 +2,7 @@
 layout: post
 title: kill long run mysql process
 date: 2013-08-13
-tags:  linux shell sql
+tags:  linux shell sql mysql
 ---
 
 紀錄起來還常用到的
