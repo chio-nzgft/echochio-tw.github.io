@@ -56,7 +56,9 @@ visible_hostname 192.168.0.70
 ```
 
 其中 Squid Server 的 hosts 有設定 : 
+
 來指定 內部 mail.demo.com 是誰 ?
+
 由 config 可知內部 服務
 
  8443 -> 443
@@ -67,6 +69,7 @@ visible_hostname 192.168.0.70
 ```
 
 再來將  Squid Server mapping 對外 ......服務 80 & 443
+
 外部 DNS 指向 Squid Server 真實 IP , 
 
 PS : 內部測試可先用 Client 的 hosts 設定取代
