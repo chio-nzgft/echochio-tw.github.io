@@ -2,7 +2,7 @@
 layout: post
 title: meteor-android-build in docker
 date: 2017-04-25
-tags:  meteor android docker
+tags:  Meteor android docker
 ---
 
 看到 人家做的 meteor-android-build 
