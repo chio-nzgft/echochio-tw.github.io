@@ -1,6 +1,6 @@
 ---
 layout: post
-title: nginx auth_basic
+title: nginx 加網頁基本認證
 date: 2018-06-25
 tags: nginx
 ---
