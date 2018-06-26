@@ -105,3 +105,29 @@ tags: letsencrypt ssl
    加入 cron
    0 3   2 /usr/local/sbin/le-renew-webroot >> /var/log/le-renewal.log;systemctl restart nginx;systemctl restart postfix;systemctl restart dovecot 2>&1 (每周二晚上三點執行)
 ```
+
+後來故障了 ....XD 
+   發現加 log 通知 比較好 .... 寫個 python .. 放入 cron
+```
+#! /usr/bin/python
+with open('/var/log/le-renewal.log', 'r') as myfile:
+        data=myfile.read().replace('\n', '<br>')
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
+smtpserver='192.168.0.100'
+user='echohio'
+password='echochio123'
+sender='chio@echochio.nctu.me'
+receiver='chio@echochio.nctu.me'
+subject='Python email le-renewal.log'
+msg=MIMEText(data,'html','utf-8')
+msg['Subject']=Header(subject,'utf-8')
+smtp=smtplib.SMTP()
+smtp.connect(smtpserver)
+smtp.login(user, password)
+smtp.sendmail(sender, receiver, msg.as_string())
+smtp.quit()
+```
+   
+  
