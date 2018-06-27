@@ -6,11 +6,15 @@ tags: golang
 ---
 
 GOOS：目標平臺的作業系統（darwin、freebsd、linux、windows） 
+
 GOARCH：目標平臺的體系架構（386、amd64、arm） 
+
 交叉編譯不支持 CGO 所以要禁用它
 
 可編譯 64 位元可執行程式
+
 你當然應該也會使用 386 編譯 32 位元可執行程式 
+
 Go 新版本已支援所有平臺
 
 
