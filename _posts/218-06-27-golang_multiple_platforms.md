@@ -62,6 +62,8 @@ export GOARM=7
 
 請參考下表 :
 
+
+
 |GOOS - Target Operating System |  | GOARCH - Target Platform |
 | ------------------------------ | ------------------------ |
 android | arm |
