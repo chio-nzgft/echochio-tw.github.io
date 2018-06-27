@@ -64,7 +64,7 @@ export GOARM=7
 
 
 
-|GOOS - Target Operating System |  | GOARCH - Target Platform |
+|GOOS - Target Operating System | GOARCH - Target Platform |
 | ------------------------------ | ------------------------ |
 android | arm |
 darwin | 386 |
