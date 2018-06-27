@@ -48,7 +48,7 @@ func sendln(t *telnet.Conn, s string) {
 func main() {
 
 	typ := "windows"
-	dst := "192.168.0.144:23"
+	dst := "192.168.0.100:23"
 	user := "Administrator"
 	passwd := "chi"
 	
