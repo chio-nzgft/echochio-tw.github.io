@@ -9,7 +9,7 @@ tags: golang printer
 
 寫個程式 telnet 去 清 queue ......
 
-最後用 golng 寫 , 這樣 windows MacOS linux 都可以執行
+最後用 golng 寫 , 這樣 windows, MacOS, linux 都可以執行
 
 
 ```
