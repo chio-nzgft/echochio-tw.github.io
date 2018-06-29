@@ -1,7 +1,7 @@
 ---
 layout: post
 title: golang 編譯各平台
-date: 218-06-27
+date: 2018-06-27
 tags: golang
 ---
 
