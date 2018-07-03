@@ -124,3 +124,8 @@ Uninstall Xbox:
 ```
 Get-AppxPackage *xboxapp* | Remove-AppxPackage
 ```
+
+還原安裝的  APP
+```
+Get-AppxPackage -AllUsers| Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
+```
