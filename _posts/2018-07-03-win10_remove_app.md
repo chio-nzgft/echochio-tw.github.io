@@ -2,7 +2,7 @@
 layout: post
 title: win10 remove app (移除市集程式)
 date: 2018-07-03
-tags: win10 powershell
+tags: Win10 powershell
 ---
 
 通常公司都沒有用，全移除
