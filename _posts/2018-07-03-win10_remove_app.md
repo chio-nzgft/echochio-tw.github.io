@@ -12,6 +12,8 @@ tags: win10 powershell
 Get-AppxPackage *.* | Remove-AppxPackage
 ```
 
+以下是一個一個移除 ........
+
 Uninstall 3D Builder:
 ```
 Get-AppxPackage *3dbuilder* | Remove-AppxPackage
