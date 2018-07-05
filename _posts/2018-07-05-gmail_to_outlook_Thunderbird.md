@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 備份 gmail 到你的 outlook 或 Thunderbird
+title: 備份 gmail 到你的 outlook 或 Thunderbird  或 其他 gmail 帳號
 date: 2018-07-05
 tags: gmail outlook Thunderbird
 ---
