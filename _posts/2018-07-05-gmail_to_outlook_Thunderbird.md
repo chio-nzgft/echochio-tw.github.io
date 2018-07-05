@@ -25,4 +25,4 @@ tags: gmail outlook Thunderbird
 
 可利用 https://www.echochio.nctu.me/2018/03/mail-trans/
 
-將其放入 outlook , 或 Thunderbird
+將其放入 outlook , 或 Thunderbird , 或是其他 gmail 帳號
