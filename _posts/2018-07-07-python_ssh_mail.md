@@ -35,8 +35,8 @@ try:
 finally:
     client.close()
 
-# datainp type tuple ...
-# use join tuple as string
+# datainp type is tuple ...
+# use join tuple to a string
 # replace \n to <br>
 data = ''.join(datainp).replace('\n', '<br>')
 import smtplib
