@@ -38,7 +38,7 @@ finally:
     client.close()
 
 # datainp type tuple ...
-# use join tuple to string
+# use join tuple as string
 # replace \n to <br>
 data = ''.join(datainp).replace('\n', '<br>')
 import smtplib
@@ -51,7 +51,7 @@ sender='echochio@echochio.nctu.me'
 receiver='echochio@echochio.nctu.me'
 #count Onln string
 info=data.count("Onln")
-# change info to int check is 4 ?
+# change info to integer for check is 4 ?
 if int(info) == 4:
         subject='Python mail esxi disk OK log'
 else:
