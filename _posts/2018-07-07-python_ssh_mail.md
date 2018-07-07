@@ -11,7 +11,7 @@ tags: Esxi python storcli lsi
 
 要安裝 storcli 在 Esxi 上 , 改天來寫
 
-寫個 python 放入排程每天定時 ssh 到 去檢查
+寫個 python 放入排程每天定時 ssh 到 exxi 去檢查
 
 ```
 #!/usr/bin/env python
