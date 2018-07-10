@@ -30,7 +30,7 @@ $user = 'XXX';
 // 密碼
 $passwd = 'XXX';
 // 取哪個倉庫資訊
-$Warehouse = 'A03'; 
+$Warehouse = 'A01'; 
 // 只是取 hostname
 $serverName = $host;
 
