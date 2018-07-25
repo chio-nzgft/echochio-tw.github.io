@@ -94,8 +94,87 @@ function modification($filename) {
 
 可以通過它訪問控制器中的所有系統類。
 
-##Controller Architecture 控制器架構
+## Controller Architecture 控制器架構
 
-您將找到如下的類名：
+您將找到如下的類名： ( Controller/Sale/Invoice )
 
+```
+<?php
+class ControllerSaleInvoice extends Controller {
+        private $error = array();
+
+        public function index() {
+                $this->load->language('sale/invoice');
+
+                $this->document->setTitle($this->language->get('heading_title'));
+
+                $this->load->model('sale/invoice');
+
+                $this->getList();
+        }
+```
+
+在Case中，您應始終首先編寫Controller關鍵字而不是任何空格。
+
+在任何控制器文件中，索引方法在通過URL命中控制器路由時首先調用。
+
+例如調用 common/header
+
+```
+$data['header'] = $this->load->controller('common/header');
+```
+還是 common/footer
+
+```
+$data['footer'] = $this->load->controller('common/footer');
+``` 
+admin 左選單 ... 'common/column_left
+
+```
+$data['column_left'] = $this->load->controller('common/column_left');
+```
+
+加載腳本和样式表
+
+在opencart中加載樣式和腳本文件有方法，通過控制器加載這些文件或在視圖文件（.tpl）上定義。
+
+直接加載 ...
+```
+$this->document->setTitle($this->language->get('heading_title'));
+$this->document->setTitle($product_info['meta_title']);
+$this->document->setDescription($product_info['meta_description']);
+$this->document->setKeywords($product_info['meta_keyword']);
+$this->document->setType('product');
+$this->document->setImage($product_info['image']);
+$this->document->setPrice($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
+$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
+$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
+```
+
+加載model
+
+控制器上加載模型，並可以使用以下命令調用模型函數：
+
+加載模型全部(sale/invoice) 或單一個 (catalog/information 內 InformationLayouts 的 information_id ...  public function getInformation($information_id )
+```
+$this->load->model('sale/invoice');
+$data['information_layout'] = $this->model_catalog_information->getInformationLayouts($this->request->get['information_id']);
+```
+
+模板（視圖）文件
+
+controller 發送 or 查看數據到view（.tpl）文件，使用以下代碼：
+```
+# use module controller , use as
+return $this->load->view('common/header', $data);
+
+# use layout controller , use as
+$this->response->setOutput($this->load->view('catalog/product_list', $data));
+```
+
+controller 回應 json 
+```
+$this->response->setOutput(json_encode($json));
+```
 
