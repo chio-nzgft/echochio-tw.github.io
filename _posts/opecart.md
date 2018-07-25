@@ -6,10 +6,14 @@ tags: opencart
 ---
 
 Opencart的路由流程以及MVC如何在opencart中工作。
+====================================================
+
  MVC不是一個應用程序，基本上它遵循設計模式並基於分層架構。
 
 MVC (Model View Controller)
+
 Opencart 模型 視圖 控制器
+
 是三層的，用於以明確定義的方式將數據相互傳遞。
 
-![](/path/to/img.jpg)
+<img src="/images/posts/opencart/1.png">
