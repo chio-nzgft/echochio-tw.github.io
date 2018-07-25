@@ -51,7 +51,7 @@ admin/language/zh-hk/common/column_left.php
 $_['text_invoice']                  = '訂單發票';
 ```
 
-那  sale/invoice control ... 
+那  sale/invoice 的 controller 是 ... 
 
 admin/controller/sale/invoice.php
 
