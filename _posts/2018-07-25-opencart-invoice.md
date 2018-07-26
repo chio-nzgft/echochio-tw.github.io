@@ -7,6 +7,8 @@ tags: opencart
 
 Opencart 加功能 - 發票功能
 ====================================================
+首先去 資料庫將發票由 int 改為 string ... 這就不寫了
+
 左選單加個發票功能 (多了 sale/invoice )
 
 admin/controller/common/column_left.php
