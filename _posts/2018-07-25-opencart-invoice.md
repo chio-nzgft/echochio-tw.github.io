@@ -110,6 +110,14 @@ $_['heading_title']                    = '訂單發票';
 
 <img src="/images/posts/opencart/2.png">
 
+<img src="/images/posts/opencart/3.png">
+
+<img src="/images/posts/opencart/4.png">
+
+<img src="/images/posts/opencart/5.png">
+
+<img src="/images/posts/opencart/6.png">
+
 debug 改了些原始碼(我也忘了改了啥 ... 反正可工作) :
 
 admin/controller/sale/invoice.php
