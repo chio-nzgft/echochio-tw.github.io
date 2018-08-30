@@ -1,3 +1,10 @@
+---
+layout: post
+title: docker image
+date: 2018-08-30
+tags: docker
+---
+
 docker image
 docker container
 docker tag
@@ -6,12 +13,6 @@ docker Repository private
 docker Registry
 
 
----
-layout: post
-title: docker image
-date: 2018-08-30
-tags: docker
----
 
 docker image 常用的記錄路一下
 
