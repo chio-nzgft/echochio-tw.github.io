@@ -797,7 +797,10 @@ kube-system   pod/kubernetes-dashboard-754f4d5f69-nfvrk   0/1       CrashLoopBac
 
 
 Dashboard cluster manager 權限
-需要一個admin cluster manager 的權限，新建 kubernetes-dashboard-admin.rbac.yaml文件，內容如下
+
+需要一個admin cluster manager 的權限，
+
+新建 kubernetes-dashboard-admin.rbac.yaml文件，內容如下
 ```
 apiVersion: v1
 kind: ServiceAccount
