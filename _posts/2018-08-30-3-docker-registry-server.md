@@ -17,7 +17,7 @@ private registry server
  docker setup docker Container registry server
 ```
 docker run -d -p 5000:5000 --restart=always --name registry -v /mnt/registry:/var/lib/registry registry:2
-(registry store in /var/lib/registry)
+(registry store in /var/lib/registry ...  to local  /mnt/registry )
 ```
 
 ```
