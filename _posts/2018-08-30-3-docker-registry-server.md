@@ -14,7 +14,7 @@ private registry server
  (with go)
 ```
 
- docker setup registry server
+ docker setup docker Container registry server
 ```
 docker run -d -p 5000:5000 --restart=always --name registry registry:2
 ```
