@@ -8,8 +8,6 @@ win7 install Vagrant
 https://docs.microsoft.com/zh-tw/powershell/wmf/5.1/install-configure
 ```
 
-
-
 設定 
 E:\vagrant\kubemaster\Vagrantfile
 ```
@@ -45,12 +43,13 @@ b625fb2  kubemaster virtualbox running E:/vagrant/kubemaster
 b4ab72f  kube2      virtualbox running E:/vagrant/kube2
 bfac262  kube3      virtualbox running E:/vagrant/kube3
 ```
-
-
 ssh 到 kubemaster
 ```
 vagrant ssh b625fb2
 ``` 
+改一下 vagrant 帳號的密碼
+
+利用 mRemoteNG ssh 到 127.0.0.1:2222 , 127.0.0.1:2201 , 127.0.0.1:2202 這樣比較好操作
 
 進入 kubemaster server  安裝用 Ansible 來部屬 kubemaster 
 ```
