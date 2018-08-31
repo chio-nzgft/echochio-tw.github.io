@@ -5,11 +5,11 @@ date: 2018-08-31
 tags: docker
 ---
 ## Kubernetes cluster on CentOS 7
-
+```
 kubemaster: 192.168.1.99
 kube2: 192.168.1.109
 kube3: 192.168.1.167
-
+```
 ## SELINUX
 ```
 setenforce 0
