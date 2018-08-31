@@ -71,16 +71,10 @@ EOF
 cat >>/etc/ansible/hosts<<EOF
 [kubemaster]
 192.168.1.99
-ansible_user=root
-ansible_pass=root
 [kube2]
 192.168.1.109
-ansible_user=root
-ansible_pass=root
 [kube3]
 192.168.1.167
-ansible_user=root
-ansible_pass=root
 EOF
 ```
 
