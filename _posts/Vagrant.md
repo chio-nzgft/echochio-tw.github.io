@@ -56,9 +56,6 @@ vagrant ssh b625fb2
 sudo yum -y install epel-release
 sudo yum -y update
 sudo yum -y install ansible
-yum -y install python-pip
-pip install --upgrade pip
-pip install ansible-lint
 cat >>/etc/hosts<<EOF
 192.168.1.99 kubemaster
 192.168.1.109 kube2
