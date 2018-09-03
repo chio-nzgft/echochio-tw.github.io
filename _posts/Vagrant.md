@@ -102,11 +102,11 @@ ansible all -m ping --extra-vars "ansible_user=root ansible_password=root"
 ```
 
 ```
-172.16.0.1 | SUCCESS => {
+192.168.1.101 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-172.16.0.2 | SUCCESS => {
+192.168.1.102 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
