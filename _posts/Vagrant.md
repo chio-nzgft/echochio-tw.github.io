@@ -108,7 +108,58 @@ unzip master.zip
 cd kubeadm-ansible-master
 ```
 
+hosts.ini
+```
+[master]
+192.168.1.109
 
+[node]
+192.168.1.[167:99]
+
+[kube-cluster:children]
+master
+node
+```
+
+group_vars/all.yml
+```
+# Ansible
+# ansible_user: root
+
+# Kubernetes
+kube_version: v1.11.1
+token: b0f7b8.8d1767876297d85c
+
+# 1.8.x feature: --feature-gates SelfHosting=true
+init_opts: ""
+
+# Any other additional opts you want to add..
+kubeadm_opts: ""
+# For example:
+# kubeadm_opts: '--apiserver-cert-extra-sans "k8s.domain.com,kubernetes.domain.com"'
+
+service_cidr: "10.96.0.0/12"
+pod_network_cidr: "10.244.0.0/16"
+
+# Network implementation('flannel', 'calico')
+network: flannel
+
+# Change this to an appropriate interface, preferably a private network.
+# For example, on DigitalOcean, you would use eth1 as that is the default private network interface.
+cni_opts: "interface=enp0s8" # flannel: --iface=eth1, calico: interface=eth1
+
+enable_dashboard: yes
+
+# A list of insecure registrys you might need to define
+insecure_registrys: ""
+# insecure_registrys: ['gcr.io']
+
+systemd_dir: /lib/systemd/system
+system_env_dir: /etc/sysconfig
+network_dir: /etc/kubernetes/network
+kubeadmin_config: /etc/kubernetes/admin.conf
+kube_addon_dir: /etc/kubernetes/addon
+```
 
 ```
 ansible-playbook playbook_centos_install_docker.yaml --extra-vars "ansible_user=root ansible_password=root"
