@@ -159,7 +159,7 @@ m1
 ```
 
 ```
- ansible-playbook bootstrap.yaml -i inventory -v --extra-vars "ansible_user=root ansible_password=root"
+ ansible-playbook bootstrap.yaml -i inventory -v
  
 ```
 
