@@ -103,9 +103,9 @@ ansible all -m ping --extra-vars "ansible_user=root ansible_password=root"
 
 ```
 yum install -y unzip
-wget https://github.com/echochio-tw/kubeadm-ansible/archive/master.zip
+wget https://github.com/containerum/letskube/archive/master.zip
 unzip master.zip
-cd kubeadm-ansible-master
+cd letskube-master
 ```
 
 hosts.ini
