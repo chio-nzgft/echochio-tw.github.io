@@ -74,10 +74,10 @@ cat >>/etc/ansible/hosts<<EOF
 EOF
 ```
 
+/etc/ansible/ansible.cfg
 ```
-ssh-keyscan 192.168.1.99 >> ~/.ssh/known_hosts
-ssh-keyscan 192.168.1.109 >> ~/.ssh/known_hosts
-ssh-keyscan 192.168.1.167 >> ~/.ssh/known_hosts
+[defaults]
+host_key_checking = False
 ```
 
 for test connect
