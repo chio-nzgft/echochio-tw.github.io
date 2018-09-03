@@ -161,30 +161,57 @@ ansible all -m ping
 ```
 
 ```
-yum install -y unzip
-wget https://github.com/containerum/letskube/archive/master.zip
-unzip master.zip
-cd letskube-master
+git clone "https://github.com/kubernetes/contrib.git"
+cd contrib/ansible
 ```
 
-inventory
+inventory/hosts
 ```
-[all]
-m1 ansible_user=root ansible_host=192.168.1.101 ansible_port=22 ip_internal=10.0.0.1
-s1 ansible_user=root ansible_host=192.168.1.102 ansible_port=22 ip_internal=10.0.0.2
 [masters]
-m1
-[slaves]
-s1
-[kubectl]
-m1
+master1
+
+[etcd:children]
+masters
+
+[nodes]
+node[1:2]
 ```
 
+ansible -i inventory/hosts all -m ping
 ```
- ansible-playbook bootstrap.yaml -i inventory -v
+master1 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+node2 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+node1 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
  
 ```
+inventory/group_vars/all.yml (自行參考 .. 選擇是否啟用)
+```
+source_type: packageManager
+cluster_name: cluster.kairen
+networking: flannel
+cluster_logging: true
+cluster_monitoring: true
+kube_dash: true
+dns_setup: true
+dns_replicas: 1
+```
 
+roles/flannel/defaults/main.yaml (看您的IP於哪個網卡)
 ```
-kubectl get nodes
+flannel_options: --iface=eth1
 ```
+開始安裝
+```
+cd scripts
+INVENTORY=../inventory/hosts ./deploy-cluster.sh
+```
+
