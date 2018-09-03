@@ -95,9 +95,9 @@ EOF
 host_key_checking = False
 ```
 
-for test connect
 ```
 # ssh-keygen -t rsa
+```
 ```
 Generating public/private rsa key pair.
 Enter file in which to save the key (/root/.ssh/id_rsa):
@@ -126,6 +126,7 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.1.101
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.1.102
 ```
 
+for test connect
 ```
 192.168.1.101 | SUCCESS => {
     "changed": false,
