@@ -73,7 +73,7 @@ vagrant ssh b625fb2
 ```
 sudo yum -y install epel-release
 sudo yum -y update
-sudo yum -y install ansible
+sudo yum -y install ansible python-netaddr git
 cat >>/etc/hosts<<EOF
 192.168.1.101 kube1
 192.168.1.102 kube2
