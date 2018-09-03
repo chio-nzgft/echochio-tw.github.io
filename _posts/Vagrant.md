@@ -14,7 +14,6 @@ E:\vagrant\kube1\Vagrantfile
 Vagrant.configure("2") do |kube1|
   kube1.vm.box = "bento/centos-7.5"
   kube1.vm.define "kube1"
-  kube1.vm.network "private_network", ip: "192.168.1.101"
   kube1.vm.network "public_network", use_dhcp_assigned_default_route: true
 	kube1.vm.provider "virtualbox" do |v|
 		v.memory = 2048
@@ -27,7 +26,6 @@ E:\vagrant\kube2\Vagrantfile
 Vagrant.configure("2") do |kube2|
   kube2.vm.box = "bento/centos-7.5"
   kube2.vm.define "kube2"
-  kube2.vm.network "private_network", ip: "192.168.1.102"
   kube2.vm.network "public_network", use_dhcp_assigned_default_route: true
     kube2.vm.provider "virtualbox" do |v|
 		v.memory = 2048
@@ -35,7 +33,18 @@ Vagrant.configure("2") do |kube2|
 	end
 end
 ```
-
+E:\vagrant\kube3\Vagrantfile
+```
+Vagrant.configure("2") do |kube3|
+  kube3.vm.box = "bento/centos-7.5"
+  kube3.vm.define "kube3"
+  kube3.vm.network "public_network", use_dhcp_assigned_default_route: true
+    kube3.vm.provider "virtualbox" do |v|
+		v.memory = 2048
+		v.cpus = 4
+	end
+end
+```
 
 開始安裝
 ```
@@ -56,18 +65,20 @@ vagrant global-status
 ```
 
 ```
-id       name       provider   state   directory
----------------------------------------------------------------------------
-b625fb2  kube1      virtualbox running E:/vagrant/kube1
-b4ab72f  kube2      virtualbox running E:/vagrant/kube2
+id       name   provider   state   directory
+-----------------------------------------------------------------------
+f6ace63  kube1  virtualbox running C:/vagrant/kube1
+5b94637  kube2  virtualbox running C:/vagrant/kube2
+0da4a16  kube3  virtualbox running C:/vagrant/kube3
+
 ```
-ssh 到 kubemaster
+ssh 到 kube1
 ```
-vagrant ssh b625fb2
+vagrant ssh f6ace63
 ``` 
 改一下 vagrant 帳號的密碼
 
-利用 mRemoteNG ssh 到 127.0.0.1:2222 , 127.0.0.1:2200  這樣比較好操作
+利用 mRemoteNG ssh 到 127.0.0.1:2222 , 127.0.0.1:2200 , 127.0.0.1:2201   這樣比較好操作
 
 進入 kube1  安裝用 Ansible 來部屬 kubemaster 
 ```
@@ -75,17 +86,20 @@ sudo yum -y install epel-release
 sudo yum -y update
 sudo yum -y install ansible python-netaddr git
 cat >>/etc/hosts<<EOF
-192.168.1.101 kube1
-192.168.1.102 kube2
+192.168.0.155 kube1
+192.168.0.156 kube2
+192.168.0.157 kube3
 EOF
 ```
 
 ```
 cat >>/etc/ansible/hosts<<EOF
 [kube1]
-192.168.1.101
+192.168.0.155
 [kube2]
-192.168.1.102
+192.168.0.156
+[kube3]
+192.168.0.157
 EOF
 ```
 
