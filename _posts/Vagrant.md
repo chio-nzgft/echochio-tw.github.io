@@ -9,12 +9,12 @@ https://docs.microsoft.com/zh-tw/powershell/wmf/5.1/install-configure
 ```
 
 設定 
-E:\vagrant\kubemaster\Vagrantfile
+E:\vagrant\kube1\Vagrantfile
 ```
 Vagrant.configure("2") do |config|
   config.vm.box = "bento/centos-7.5"
-  config.vm.define "kubemaster"
-  config.vm.network "private_network", ip: "192.168.1.99"
+  config.vm.define "kube1"
+  config.vm.network "private_network", ip: "172.16.0.1"
 end
 ```
 
@@ -23,7 +23,7 @@ end
 Vagrant up --provider=virtualbox
 ```
 
-同樣方式安裝 kube2 & kube3 兩台 virtualbox 
+同樣方式安裝 kube2 兩台 virtualbox 
 ```
 E:\vagrant\kube2>Vagrant up --provider=virtualbox
 Bringing machine 'kube2' up with 'virtualbox' provider..
@@ -39,9 +39,8 @@ vagrant global-status
 ```
 id       name       provider   state   directory
 ---------------------------------------------------------------------------
-b625fb2  kubemaster virtualbox running E:/vagrant/kubemaster
+b625fb2  kube1      virtualbox running E:/vagrant/kube1
 b4ab72f  kube2      virtualbox running E:/vagrant/kube2
-bfac262  kube3      virtualbox running E:/vagrant/kube3
 ```
 ssh 到 kubemaster
 ```
@@ -49,7 +48,7 @@ vagrant ssh b625fb2
 ``` 
 改一下 vagrant 帳號的密碼
 
-利用 mRemoteNG ssh 到 127.0.0.1:2222 , 127.0.0.1:2201 , 127.0.0.1:2202 這樣比較好操作
+利用 mRemoteNG ssh 到 127.0.0.1:2222 , 127.0.0.1:2201  這樣比較好操作
 
 進入 kubemaster server  安裝用 Ansible 來部屬 kubemaster 
 ```
@@ -57,20 +56,17 @@ sudo yum -y install epel-release
 sudo yum -y update
 sudo yum -y install ansible
 cat >>/etc/hosts<<EOF
-192.168.1.99 kubemaster
-192.168.1.109 kube2
-192.168.1.167 kube3
+172.16.0.1 kube1
+172.16.0.2 kube2
 EOF
 ```
 
 ```
 cat >>/etc/ansible/hosts<<EOF
-[kubemaster]
-192.168.1.99
+[[kube1]
+172.16.0.1
 [kube2]
-192.168.1.109
-[kube3]
-192.168.1.167
+172.16.0.2
 EOF
 ```
 
@@ -87,15 +83,11 @@ ansible all -m ping --extra-vars "ansible_user=root ansible_password=root"
 ```
 
 ```
-192.168.1.167 | SUCCESS => {
+172.16.0.1 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-192.168.1.109 | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
-192.168.1.99 | SUCCESS => {
+172.16.0.2 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
