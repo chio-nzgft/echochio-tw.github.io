@@ -97,8 +97,33 @@ host_key_checking = False
 
 for test connect
 ```
-export ANSIBLE_HOST_KEY_CHECKING=False
-ansible all -m ping --extra-vars "ansible_user=root ansible_password=root"
+# ssh-keygen -t rsa
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:thYCXzkAlx7Rj3ncB2/Pu4yzwJpgo6YdtnpG8RDem+I root@localhost.localdomain
+The key's randomart image is:
++---[RSA 2048]----+
+|    ..++         |
+|     oo...  .    |
+|    o.o.+= . o   |
+|     *.oo.+ . +  |
+|      * S.   o o |
+|     o * o.     o|
+|    oo.+o  o    .|
+|    oE=.o o ..o. |
+|   o*+   o   ooo.|
++----[SHA256]-----+
+```
+
+```
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.1.101
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.1.102
 ```
 
 ```
