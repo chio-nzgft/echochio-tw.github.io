@@ -122,8 +122,8 @@ cd letskube-master
 inventory
 ```
 [all]
-m1 ansible_user=centos ansible_host=192.168.1.101 ansible_port=22 ip_internal=10.0.0.1
-s1 ansible_user=centos ansible_host=192.168.1.102 ansible_port=22 ip_internal=10.0.0.2
+m1 ansible_user=root ansible_host=192.168.1.101 ansible_port=22 ip_internal=10.0.0.1
+s1 ansible_user=root ansible_host=192.168.1.102 ansible_port=22 ip_internal=10.0.0.2
 [masters]
 m1
 [slaves]
