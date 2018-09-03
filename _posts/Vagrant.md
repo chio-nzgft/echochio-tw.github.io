@@ -11,12 +11,31 @@ https://docs.microsoft.com/zh-tw/powershell/wmf/5.1/install-configure
 設定 
 E:\vagrant\kube1\Vagrantfile
 ```
-Vagrant.configure("2") do |config|
-  config.vm.box = "bento/centos-7.5"
-  config.vm.define "kube1"
-  config.vm.network "private_network", ip: "172.16.0.1"
+Vagrant.configure("2") do |kube1|
+  kube1.vm.box = "bento/centos-7.5"
+  kube1.vm.define "kube1"
+  kube1.vm.network "private_network", ip: "192.168.1.101"
+  kube1.vm.network "public_network", use_dhcp_assigned_default_route: true
+	kube1.vm.provider "virtualbox" do |v|
+		v.memory = 2048
+		v.cpus = 4
+	end
 end
 ```
+E:\vagrant\kube2\Vagrantfile
+```
+Vagrant.configure("2") do |kube2|
+  kube2.vm.box = "bento/centos-7.5"
+  kube2.vm.define "kube2"
+  kube2.vm.network "private_network", ip: "192.168.1.102"
+  kube2.vm.network "public_network", use_dhcp_assigned_default_route: true
+    kube2.vm.provider "virtualbox" do |v|
+		v.memory = 2048
+		v.cpus = 4
+	end
+end
+```
+
 
 開始安裝
 ```
