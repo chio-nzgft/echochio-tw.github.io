@@ -69,23 +69,23 @@ vagrant ssh b625fb2
 
 利用 mRemoteNG ssh 到 127.0.0.1:2222 , 127.0.0.1:2200  這樣比較好操作
 
-進入 kubemaster server  安裝用 Ansible 來部屬 kubemaster 
+進入 kube1  安裝用 Ansible 來部屬 kubemaster 
 ```
 sudo yum -y install epel-release
 sudo yum -y update
 sudo yum -y install ansible
 cat >>/etc/hosts<<EOF
-172.16.0.1 kube1
-172.16.0.2 kube2
+192.168.1.101 kube1
+192.168.1.102 kube2
 EOF
 ```
 
 ```
 cat >>/etc/ansible/hosts<<EOF
 [[kube1]
-172.16.0.1
+192.168.1.101
 [kube2]
-172.16.0.2
+192.168.1.102
 EOF
 ```
 
@@ -122,8 +122,8 @@ cd letskube-master
 inventory
 ```
 [all]
-m1 ansible_user=centos ansible_host=172.16.0.1 ansible_port=22 ip_internal=10.0.0.1
-s1 ansible_user=centos ansible_host=172.16.0.2 ansible_port=22 ip_internal=10.0.0.2
+m1 ansible_user=centos ansible_host=192.168.1.101 ansible_port=22 ip_internal=10.0.0.1
+s1 ansible_user=centos ansible_host=192.168.1.102 ansible_port=22 ip_internal=10.0.0.2
 [masters]
 m1
 [slaves]
