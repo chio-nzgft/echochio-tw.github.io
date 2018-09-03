@@ -161,63 +161,70 @@ ansible all -m ping
 ```
 
 ```
-git clone "https://github.com/kubernetes/contrib.git"
-cd contrib/ansible
+git clone https://github.com/kairen/kubeadm-ansible.git
+cd kubeadm-ansible/
+```
+ hosts.ini
+```
+[master]
+192.168.0.164
+
+[node]
+192.168.0.[165:166]
+
+[kube-cluster:children]
+master
+node
+```
+ group_vars/all.yml
 ```
 
-inventory/hosts
-```
-[masters]
-master1
+# Ansible
+# ansible_user: root
 
-[etcd:children]
-masters
+# Kubernetes
+kube_version: v1.11.1
+token: b0f7b8.8d1767876297d85c
 
-[nodes]
-node[1:2]
-```
+# 1.8.x feature: --feature-gates SelfHosting=true
+init_opts: ""
 
-ansible -i inventory/hosts all -m ping
-```
-master1 | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
-node2 | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
-node1 | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
- 
-```
-inventory/group_vars/all.yml (自行參考 .. 選擇是否啟用)
-```
-source_type: packageManager
-cluster_name: cluster.kairen
-networking: flannel
-cluster_logging: true
-cluster_monitoring: true
-kube_dash: true
-dns_setup: true
-dns_replicas: 1
-```
+# Any other additional opts you want to add..
+kubeadm_opts: ""
+# For example:
+# kubeadm_opts: '--apiserver-cert-extra-sans "k8s.domain.com,kubernetes.domain.com"'
 
-roles/flannel/defaults/main.yaml (看您的IP於哪個網卡)
-```
-flannel_options: --iface=eth1
+service_cidr: "10.96.0.0/12"
+pod_network_cidr: "10.244.0.0/16"
+
+# Network implementation('flannel', 'calico')
+network: flannel
+
+# Change this to an appropriate interface, preferably a private network.
+# For example, on DigitalOcean, you would use eth1 as that is the default private network interface.
+cni_opts: "interface=eth1" # flannel: --iface=eth1, calico: interface=eth1
+
+enable_dashboard: yes
+
+# A list of insecure registrys you might need to define
+insecure_registrys: ""
+# insecure_registrys: ['gcr.io']
+
+systemd_dir: /lib/systemd/system
+system_env_dir: /etc/sysconfig
+network_dir: /etc/kubernetes/network
+kubeadmin_config: /etc/kubernetes/admin.conf
+kube_addon_dir: /etc/kubernetes/addon
 ```
 開始安裝
 ```
-cd scripts
-INVENTORY=../inventory/hosts ./deploy-cluster.sh
+ansible-playbook site.yaml
 ```
 
-
-
 ```
- cp /root/contrib/ansible/inventory/hosts /root/contrib/ansible/inventory/inventory
-./deploy-cluster.sh --tags=etcd
+PLAY RECAP ******************************************************************************************
+192.168.0.164              : ok=28   changed=22   unreachable=0    failed=0
+192.168.0.165              : ok=20   changed=15   unreachable=0    failed=0
+192.168.0.166              : ok=20   changed=15   unreachable=0    failed=0
+
 ```
