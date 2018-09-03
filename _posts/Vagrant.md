@@ -76,7 +76,7 @@ ssh 到 kube1
 ```
 vagrant ssh f6ace63
 ``` 
-改一下 vagrant 帳號的密碼
+改一下 vagrant 帳號的密碼 ( defailt 密碼是 vagrant)
 
 利用 mRemoteNG ssh 到 127.0.0.1:2222 , 127.0.0.1:2200 , 127.0.0.1:2201   這樣比較好操作
 
@@ -85,25 +85,25 @@ vagrant ssh f6ace63
 sudo yum -y install epel-release
 sudo yum -y update
 sudo yum -y install ansible python-netaddr git
-cat >>/etc/hosts<<EOF
-192.168.0.155 kube1 master1
-192.168.0.156 kube2 node1
-192.168.0.157 kube3 node2
+sudo cat >>/etc/hosts<<EOF
+192.168.0.164 kube1 master1
+192.168.0.165 kube2 node1
+192.168.0.166 kube3 node2
 EOF
 ```
 
 ```
-cat >>/etc/ansible/hosts<<EOF
+sudo cat >>/etc/ansible/hosts<<EOF
 [kube1]
-192.168.0.155
+192.168.0.164
 [kube2]
-192.168.0.156
+192.168.0.165
 [kube3]
-192.168.0.157
+192.168.0.166
 EOF
 ```
 
-/etc/ansible/ansible.cfg
+sudo vi /etc/ansible/ansible.cfg
 ```
 [defaults]
 host_key_checking = False
