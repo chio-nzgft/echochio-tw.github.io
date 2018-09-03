@@ -215,3 +215,9 @@ cd scripts
 INVENTORY=../inventory/hosts ./deploy-cluster.sh
 ```
 
+
+
+```
+ cp /root/contrib/ansible/inventory/hosts /root/contrib/ansible/inventory/inventory
+./deploy-cluster.sh --tags=etcd
+```
