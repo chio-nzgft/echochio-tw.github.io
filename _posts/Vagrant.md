@@ -86,9 +86,9 @@ sudo yum -y install epel-release
 sudo yum -y update
 sudo yum -y install ansible python-netaddr git
 cat >>/etc/hosts<<EOF
-192.168.0.155 kube1
-192.168.0.156 kube2
-192.168.0.157 kube3
+192.168.0.155 kube1 master1
+192.168.0.156 kube2 node1
+192.168.0.157 kube3 node2
 EOF
 ```
 
