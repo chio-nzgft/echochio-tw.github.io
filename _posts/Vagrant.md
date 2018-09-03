@@ -48,7 +48,7 @@ vagrant ssh b625fb2
 ``` 
 改一下 vagrant 帳號的密碼
 
-利用 mRemoteNG ssh 到 127.0.0.1:2222 , 127.0.0.1:2201  這樣比較好操作
+利用 mRemoteNG ssh 到 127.0.0.1:2222 , 127.0.0.1:2200  這樣比較好操作
 
 進入 kubemaster server  安裝用 Ansible 來部屬 kubemaster 
 ```
