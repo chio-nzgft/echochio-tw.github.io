@@ -136,20 +136,28 @@ The key's randomart image is:
 ```
 
 ```
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.1.101
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.1.102
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.155
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.156
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.157
 ```
-
 for test connect
+
+ansible all -m ping
+
 ```
-192.168.1.101 | SUCCESS => {
+192.168.0.155 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-192.168.1.102 | SUCCESS => {
+192.168.0.157 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
+192.168.0.156 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+
 ```
 
 ```
