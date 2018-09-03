@@ -228,3 +228,13 @@ PLAY RECAP *********************************************************************
 192.168.0.166              : ok=20   changed=15   unreachable=0    failed=0
 
 ```
+
+```
+[vagrant@master1 ~]$ export KUBECONFIG=/etc/kubernetes/admin.conf
+[vagrant@master1 ~]$ kubectl get node
+NAME      STATUS    ROLES     AGE       VERSION
+master1   Ready     master    27m       v1.11.2
+node1     Ready     <none>    26m       v1.11.2
+node2     Ready     <none>    26m       v1.11.2
+
+```
