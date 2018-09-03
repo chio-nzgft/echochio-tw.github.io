@@ -162,5 +162,5 @@ kube_addon_dir: /etc/kubernetes/addon
 ```
 
 ```
-ansible-playbook playbook_centos_install_docker.yaml --extra-vars "ansible_user=root ansible_password=root"
+ansible-playbook site.yaml --extra-vars "ansible_user=root ansible_password=root" 
 ```
