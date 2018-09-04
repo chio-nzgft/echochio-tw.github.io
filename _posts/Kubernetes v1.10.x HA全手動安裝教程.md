@@ -391,7 +391,9 @@ for FILE in kube-apiserver kube-controller-manager kube-scheduler haproxy keepal
 done
 ```
 
-ls /etc/kubernetes/manifests (need change yml IP....)
+ls /etc/kubernetes/manifests 
+
+# (need change yml IP....)
 ```
 etcd.yml  haproxy.yml  keepalived.yml  kube-apiserver.yml  kube-controller-manager.yml  kube-scheduler.yml
 ```
