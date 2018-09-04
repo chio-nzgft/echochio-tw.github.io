@@ -437,7 +437,9 @@ systemctl enable kubelet.service && systemctl start kubelet.service
 ```
 
 ```
-watch netstat -ntlpActive Internet connections (only servers)Proto Recv-Q Send-Q 
+watch netstat -ntlp
+
+Active Internet connections (only servers)Proto Recv-Q Send-Q 
 ```
 
 ```
