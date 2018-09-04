@@ -84,7 +84,7 @@ for NODE in k8s-m2; do
   done
 ```
 
-k8s-m1 build Kubernetes pki (192.168.0.22 cluster IP)
+k8s-m1 build Kubernetes pki (192.168.0.222 cluster IP)
 ```
 mkdir -p /etc/kubernetes/pki && cd /etc/kubernetes/pki
 export PKI_URL="https://kairen.github.io/files/manual-v1.10/pki"
