@@ -14,6 +14,80 @@ sudo cat >>/etc/hosts<<EOF
 192.168.0.158 k8s-n2
 EOF
 ```
+
+```
+yum -y install haproxy keepalived
+```
+vi /etc/haproxy/haproxy.cfg
+```
+frontend api *:6443
+    default_backend    api
+
+frontend etcd *:2379
+    default_backend    etcd
+
+backend api
+    balance   leastconn
+    server    k8s-m1  k8s-m1:6443  check
+    server    k8s-m2  k8s-m2:6443  check  backup
+
+backend etcd
+    balance   leastconn
+    server    master1  k8s-m1:2379  check
+    server    master2  k8s-m2:2379  check  backup
+```
+
+```	
+systemctl enable haproxy
+systemctl start haproxy
+```
+k8s-m1
+
+/etc/keepalived/keepalived.conf
+```
+vrrp_script chk_haproxy {
+    script "systemctl is-active haproxy"
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface eth0
+    virtual_router_id 1
+    priority 100
+    virtual_ipaddress {
+        192.168.0.222
+    }
+    track_script {
+        chk_haproxy
+    }
+}
+```
+k8s-m2
+
+/etc/keepalived/keepalived.conf
+```
+vrrp_script chk_haproxy {
+    script "systemctl is-active haproxy"
+}
+
+vrrp_instance VI_1 {
+    state BACKUP
+    interface eth0
+    virtual_router_id 1
+    priority 101
+    virtual_ipaddress {
+        192.168.0.222
+    }
+    track_script {
+        chk_haproxy
+    }
+}
+```
+```
+systemctl enable keepalived
+systemctl start keepalived
+```
+
 # k8s-m1 ...
 ```
 sudo yum -y install epel-release
