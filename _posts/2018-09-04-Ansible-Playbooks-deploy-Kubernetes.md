@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Ansible Playbooks deploy Kubernetes
+title: Ansible Playbooks deploy Kubernetes cluster
 date: 2018-09-04
 tags: docker
 ---
