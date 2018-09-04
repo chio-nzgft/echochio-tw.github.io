@@ -1,3 +1,12 @@
+host info
+```
+192.168.0.175 k8s-m1 master1
+192.168.0.176 k8s-m2 master2
+192.168.0.177 k8s-n1 node1
+192.168.0.178 k8s-n2 node2
+192.168.0.222 cluster IP
+````
+
 all node
 ```
 systemctl stop firewalld && systemctl disable firewalld
