@@ -358,7 +358,6 @@ sa.key  sa.pub
 
 ```
 rm -rf *.json *.csr scheduler*.pem controller-manager*.pem admin*.pem kubelet*.pem
-```
 for NODE in k8s-m2; do
     echo "--- $NODE ---"
     for FILE in $(ls /etc/kubernetes/pki/); do
