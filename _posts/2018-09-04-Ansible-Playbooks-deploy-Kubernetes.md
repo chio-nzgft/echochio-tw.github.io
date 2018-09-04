@@ -36,11 +36,6 @@ backend etcd
     server    master1  k8s-m1:2379  check
     server    master2  k8s-m2:2379  check  backup
 ```
-
-```	
-systemctl enable haproxy
-systemctl start haproxy
-```
 k8s-m1
 
 /etc/keepalived/keepalived.conf
