@@ -211,6 +211,28 @@ kubectl get cs
 kubectl get no
 kubectl get po -n kube-system
 ```
+```
+NAME                             READY     STATUS    RESTARTS   AGE
+calico-node-6tbqd                2/2       Running   0          4m
+calico-node-b4fml                2/2       Running   0          4m
+calico-node-km5km                2/2       Running   0          4m
+calico-node-txpqw                2/2       Running   0          4m
+coredns-6d98b868c7-zlqjp         1/1       Running   0          5m
+kube-apiserver-k8s-m1            1/1       Running   0          5m
+kube-apiserver-k8s-m2            1/1       Running   0          5m
+kube-controller-manager-k8s-m1   1/1       Running   0          5m
+kube-controller-manager-k8s-m2   1/1       Running   0          5m
+kube-haproxy-k8s-m1              1/1       Running   0          5m
+kube-haproxy-k8s-m2              1/1       Running   0          5m
+kube-keepalived-k8s-m1           1/1       Running   0          5m
+kube-keepalived-k8s-m2           1/1       Running   0          5m
+kube-proxy-d5wpg                 1/1       Running   0          4m
+kube-proxy-gl5r6                 1/1       Running   0          5m
+kube-proxy-lhl5w                 1/1       Running   0          5m
+kube-proxy-mk5bl                 1/1       Running   0          4m
+kube-scheduler-k8s-m1            1/1       Running   0          5m
+kube-scheduler-k8s-m2            1/1       Running   0          4m
+```
 
 # Addons dashboard
 ```
