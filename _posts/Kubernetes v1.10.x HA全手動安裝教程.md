@@ -397,7 +397,11 @@ etcd.yml  haproxy.yml  keepalived.yml  kube-apiserver.yml  kube-controller-manag
 ```
  Etcd Key
 ```
-head -c 32 /dev/urandom | base64SUpbL4juUYyvxj3/gonV5xVEx8j769/99TSAf8YT/sQ=
+head -c 32 /dev/urandom | base64
+```
+
+```
+SUpbL4juUYyvxj3/gonV5xVEx8j769/99TSAf8YT/sQ=
 ```
 
 all master
