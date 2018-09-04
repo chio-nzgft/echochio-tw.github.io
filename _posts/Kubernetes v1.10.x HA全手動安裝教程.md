@@ -33,7 +33,7 @@ wget "${KUBE_URL}/kubectl" -O /usr/local/bin/kubectl
 chmod +x /usr/local/bin/kubectl
 mkdir -p /opt/cni/bin && cd /opt/cni/bin
 export CNI_URL="https://github.com/containernetworking/plugins/releases/download"
-wget -qO- --show-progress "${CNI_URL}/v0.6.0/cni-plugins-amd64-v0.6.0.tgz" | tar -zx
+wget -qO- "${CNI_URL}/v0.6.0/cni-plugins-amd64-v0.6.0.tgz" | tar -zx
 ```
 k8s-m1需要安裝CFSSL工具，這將會用來建立 TLS Certificates。
 ```
