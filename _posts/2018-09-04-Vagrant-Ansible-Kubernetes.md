@@ -1,3 +1,10 @@
+---
+layout: post
+title: Ansible Playbooks deploy Kubernetes site
+date: 2018-09-04
+tags: docker
+---
+
 win7 install Vagrant
 
 下載 Vagrant 安裝重開
