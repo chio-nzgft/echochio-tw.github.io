@@ -192,6 +192,8 @@ kubectl config use-context kubernetes-admin@kubernetes \
     --kubeconfig=../admin.conf
 ```
 Controller Manager Certificate
+
+IP 不同，需修改manager-csr.json的hosts
 ```
 wget "${PKI_URL}/manager-csr.json"
 cfssl gencert \
@@ -206,9 +208,6 @@ cfssl gencert \
 ```
 controller-manager-key.pem  controller-manager.pem
 ```
-
-IP 不同，需修改manager-csr.json的hosts
-
 controller-manager set cluster
 ```
 kubectl config set-cluster kubernetes \
@@ -314,6 +313,7 @@ for NODE in k8s-m2; do
     for FILE in kubelet-$NODE-key.pem kubelet-$NODE.pem ca.pem; do
       scp /etc/kubernetes/pki/${FILE} ${NODE}:/etc/kubernetes/pki/${FILE}
     done
+ done
 ```
 
 
