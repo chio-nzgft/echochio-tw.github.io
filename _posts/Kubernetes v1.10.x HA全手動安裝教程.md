@@ -117,7 +117,7 @@ apiserver-key.pem  apiserver.pem
 Front Proxy CA:
 ```
 wget "${PKI_URL}/front-proxy-ca-csr.json"
-$ cfssl gencert \
+cfssl gencert \
   -initca front-proxy-ca-csr.json | cfssljson -bare front-proxy-ca
 ```
 
