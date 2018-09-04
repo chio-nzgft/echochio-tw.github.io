@@ -212,6 +212,7 @@ kubectl get no
 kubectl get po -n kube-system
 ```
 ```
+[root@k8s-m1 kube-ansible]# kubectl get po -n kube-system
 NAME                             READY     STATUS    RESTARTS   AGE
 calico-node-6tbqd                2/2       Running   0          4m
 calico-node-b4fml                2/2       Running   0          4m
@@ -232,6 +233,20 @@ kube-proxy-lhl5w                 1/1       Running   0          5m
 kube-proxy-mk5bl                 1/1       Running   0          4m
 kube-scheduler-k8s-m1            1/1       Running   0          5m
 kube-scheduler-k8s-m2            1/1       Running   0          4m
+[root@k8s-m1 kube-ansible]# kubectl get no
+NAME      STATUS    ROLES     AGE       VERSION
+k8s-m1    Ready     master    7m        v1.11.2
+k8s-m2    Ready     master    7m        v1.11.2
+k8s-n1    Ready     <none>    5m        v1.11.2
+k8s-n2    Ready     <none>    5m        v1.11.2
+[root@k8s-m1 kube-ansible]# kubectl get cs
+NAME                 STATUS    MESSAGE              ERROR
+controller-manager   Healthy   ok
+scheduler            Healthy   ok
+etcd-1               Healthy   {"health": "true"}
+etcd-0               Healthy   {"health": "true"}
+[root@k8s-m1 kube-ansible]#
+
 ```
 
 # Addons dashboard
