@@ -284,18 +284,68 @@ kube-scheduler-k8s-m2                  1/1       Running   0          10h
 kubernetes-dashboard-6948bdb78-m2nv5   1/1       Running   0          6m
 
 ```
-dashboard check
+# dashboard 
 ```
 kubectl get po,svc -n kube-system -l k8s-app=kubernetes-dashboard
 ```
+NAME                                       READY     STATUS    RESTARTS   AGE
+pod/kubernetes-dashboard-6948bdb78-mc9q2   1/1       Running   0          52m
+
+NAME                           TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes-dashboard   ClusterIP   10.111.153.203   <none>        443/TCP   52m
+```
+```
+kubectl -n kube-system edit service kubernetes-dashboard 
+```
+加入 externalIPs
+```
+spec:
+  clusterIP: 10.111.153.203
+  externalIPs:
+  - 192.168.0.155
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 8443
 
 ```
-[root@k8s-m1 kube-ansible]# kubectl get po,svc -n kube-system -l k8s-app=kubernetes-dashboard
+kubectl get po,svc -n kube-system -l k8s-app=kubernetes-dashboard
+```
+```
 NAME                                       READY     STATUS    RESTARTS   AGE
-pod/kubernetes-dashboard-6948bdb78-m2nv5   1/1       Running   0          4m
+pod/kubernetes-dashboard-6948bdb78-mc9q2   1/1       Running   0          1h
 
-NAME                           TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
-service/kubernetes-dashboard   ClusterIP   10.99.108.13   <none>        443/TCP   4m
+NAME                           TYPE        CLUSTER-IP       EXTERNAL-IP     PORT(S)   AGE
+service/kubernetes-dashboard   ClusterIP   10.111.153.203   192.168.0.155   443/TCP   1h
+```
+
+用 firefox 開 https://192.168.0.155/
+
+login with token
+
+```
+kubectl -n kube-system get secret |grep kubernetes-dashboard-token
+```
+```
+kubernetes-dashboard-token-czk49                 kubernetes.io/service-account-token   3         1h
+```
+```
+kubectl -n kube-system describe secret kubernetes-dashboard-token-czk49
+```
+```
+Name:         kubernetes-dashboard-token-czk49
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name=kubernetes-dashboard
+              kubernetes.io/service-account.uid=934af6cf-b0c9-11e8-a5c0-0800278bc93f
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1428 bytes
+namespace:  11 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi1jems0OSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjkzNGFmNmNmLWIwYzktMTFlOC1hNWMwLTA4MDAyNzhiYzkzZiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTprdWJlcm5ldGVzLWRhc2hib2FyZCJ9.XRM2TAOAmUTbO-sxwHQBnjzlSQJfjrQNReiqbtGeMs8AkayEosMUewE3VcdvyyDnlbOVuChAj_Tg4U0bE01UmMcesuquOd1KCziUYUxabeQoKMNdCHRrz7wi1pVpZhrgSnMTsgOZEY_Pm1EUfE7yu-XUjQu5rrdKpgHMZEN40ZBEsBHZxfFouFupObPRIxoNuqmUjD9Jgs_xrmFPjidnH-q7nolfuUL7L0LcFcbVC_cIJvnhpHqHMpmFke0Qb7NPhhjOzw3FjOK2EUeX67ZcFTTld6ElAxvH-HiNhaqKDlmEkycJz-EbeEuWMZHTj8HnGpi-18_lI8_3ucAXNrqGnw
 ```
 
 check ha
