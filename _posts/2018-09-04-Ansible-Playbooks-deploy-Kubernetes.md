@@ -310,6 +310,7 @@ spec:
     targetPort: 8443
 
 ```
+```
 kubectl get po,svc -n kube-system -l k8s-app=kubernetes-dashboard
 ```
 ```
