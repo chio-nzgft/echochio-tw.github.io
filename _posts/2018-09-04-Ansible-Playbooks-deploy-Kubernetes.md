@@ -253,10 +253,51 @@ etcd-0               Healthy   {"health": "true"}
 ```
 ansible-playbook -i inventory/hosts.ini addons.yml
 ```
+```
+[root@k8s-m2 ~]#  kubectl get po -n kube-system
+NAME                                   READY     STATUS    RESTARTS   AGE
+calico-node-6tbqd                      2/2       Running   0          10h
+calico-node-b4fml                      2/2       Running   0          10h
+calico-node-km5km                      2/2       Running   0          10h
+calico-node-txpqw                      2/2       Running   0          10h
+coredns-6d98b868c7-zlqjp               1/1       Running   0          10h
+elasticsearch-logging-0                1/1       Running   1          5m
+fluentd-es-5lqz4                       1/1       Running   0          5m
+fluentd-es-mgmqt                       1/1       Running   0          5m
+fluentd-es-pbggw                       1/1       Running   0          5m
+fluentd-es-r6lh7                       1/1       Running   0          5m
+kibana-logging-56c4d58dcd-jgrjv        1/1       Running   0          5m
+kube-apiserver-k8s-m1                  1/1       Running   0          10h
+kube-apiserver-k8s-m2                  1/1       Running   0          10h
+kube-controller-manager-k8s-m1         1/1       Running   0          10h
+kube-controller-manager-k8s-m2         1/1       Running   0          10h
+kube-haproxy-k8s-m1                    1/1       Running   0          10h
+kube-haproxy-k8s-m2                    1/1       Running   0          10h
+kube-keepalived-k8s-m1                 1/1       Running   0          10h
+kube-keepalived-k8s-m2                 1/1       Running   0          10h
+kube-proxy-d5wpg                       1/1       Running   0          10h
+kube-proxy-gl5r6                       1/1       Running   0          10h
+kube-proxy-lhl5w                       1/1       Running   0          10h
+kube-proxy-mk5bl                       1/1       Running   0          10h
+kube-scheduler-k8s-m1                  1/1       Running   0          10h
+kube-scheduler-k8s-m2                  1/1       Running   0          10h
+kubernetes-dashboard-6948bdb78-m2nv5   1/1       Running   0          6m
+
+```
 dashboard check
 ```
 kubectl get po,svc -n kube-system -l k8s-app=kubernetes-dashboard
 ```
+
+```
+[root@k8s-m1 kube-ansible]# kubectl get po,svc -n kube-system -l k8s-app=kubernetes-dashboard
+NAME                                       READY     STATUS    RESTARTS   AGE
+pod/kubernetes-dashboard-6948bdb78-m2nv5   1/1       Running   0          4m
+
+NAME                           TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes-dashboard   ClusterIP   10.99.108.13   <none>        443/TCP   4m
+```
+
 check ha
 ```
 export PKI="/etc/kubernetes/pki/etcd"
