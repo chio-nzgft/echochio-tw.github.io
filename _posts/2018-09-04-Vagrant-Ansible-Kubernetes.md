@@ -47,7 +47,7 @@ Vagrant.configure("2") do |kube3|
   kube3.vm.define "kube3"
   kube3.vm.network "public_network", use_dhcp_assigned_default_route: true
     kube3.vm.provider "virtualbox" do |v|
-		v.memory = 2048
+		v.memory = 1024
 		v.cpus = 4
 	end
 end
