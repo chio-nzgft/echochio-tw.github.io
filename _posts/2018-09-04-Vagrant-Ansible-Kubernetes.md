@@ -98,18 +98,6 @@ sudo cat >>/etc/hosts<<EOF
 192.168.0.166 kube3 node2
 EOF
 ```
-
-```
-sudo cat >>/etc/ansible/hosts<<EOF
-[kube1]
-192.168.0.164
-[kube2]
-192.168.0.165
-[kube3]
-192.168.0.166
-EOF
-```
-
 sudo vi /etc/ansible/ansible.cfg
 ```
 [defaults]
@@ -143,30 +131,10 @@ The key's randomart image is:
 ```
 
 ```
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.155
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.156
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.157
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.164
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.165
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.166
 ```
-for test connect
-
-ansible all -m ping
-
-```
-192.168.0.155 | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
-192.168.0.157 | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
-192.168.0.156 | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
-
-```
-
 ```
 git clone https://github.com/kairen/kubeadm-ansible.git
 cd kubeadm-ansible/
@@ -223,6 +191,25 @@ network_dir: /etc/kubernetes/network
 kubeadmin_config: /etc/kubernetes/admin.conf
 kube_addon_dir: /etc/kubernetes/addon
 ```
+ping test
+```
+ansible -i hosts.ini all -m ping
+```
+```
+192.168.0.164 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+192.168.0.165 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+192.168.0.166 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
+
 開始安裝
 ```
 ansible-playbook site.yaml
