@@ -362,13 +362,17 @@ ETCDCTL_API=3 etcdctl \
 ```
 start nginx
 ```
-kubectl run nginx --image nginx --restart=Never --port 80
+kubectl run nginx --image nginx --restart=Never --port 80:192.168.0.155:9999
 kubectl expose pod nginx --port 80 --type NodePort
 kubectl get po,svc
 ```
 check nginx url
 ```
 curl 192.168.0.222:31780
+```
+
+```
+kubectl get secret,sa,role,rolebinding,services,deployments  --all-namespaces
 ```
 
 rollback install
