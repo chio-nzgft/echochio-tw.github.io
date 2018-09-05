@@ -288,6 +288,7 @@ kubernetes-dashboard-6948bdb78-m2nv5   1/1       Running   0          6m
 ```
 kubectl get po,svc -n kube-system -l k8s-app=kubernetes-dashboard
 ```
+```
 NAME                                       READY     STATUS    RESTARTS   AGE
 pod/kubernetes-dashboard-6948bdb78-mc9q2   1/1       Running   0          52m
 
