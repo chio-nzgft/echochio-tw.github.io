@@ -252,3 +252,40 @@ NAME                   TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 kubernetes-dashboard   ClusterIP   10.101.53.84   <none>        443/TCP   15m
 ```
 
+```
+[root@master kubeadm-ansible]# kubectl proxy &
+Starting to serve on 127.0.0.1:8001
+```
+
+```
+[root@master kubeadm-ansible]# kubectl -n kube-system edit service kubernetes-dashboard
+```
+
+``` 
+更改 type: ClusterIP 
+改成 type: NodePort
+```
+
+```
+[root@master ~]#  kubectl -n kube-system get service kubernetes-dashboard
+NAME                   TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)         AGE
+kubernetes-dashboard   NodePort   10.101.53.84   <none>        443:32162/TCP   1h
+```
+
+改 Vagrantfile 將 port 32162 forwaord 出來
+```
+master.vm.network :forwarded_port, host: 32162, guest: 32162
+```
+重新載入 Vagrant
+```
+vagrant reload
+```
+
+用 host firefox 開 ....
+```
+https://127.0.0.1:32162/#!/login
+```
+
+
+
+
