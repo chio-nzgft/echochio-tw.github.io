@@ -134,9 +134,9 @@ The key's randomart image is:
 ```
 
 ```
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.164
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.165
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.166
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.22.164
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.22.165
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.22.166
 ```
 ```
 git clone https://github.com/kairen/kubeadm-ansible.git
@@ -145,10 +145,10 @@ cd kubeadm-ansible/
  hosts.ini
 ```
 [master]
-192.168.0.164
+192.168.22.164
 
 [node]
-192.168.0.[165:166]
+192.168.22.[165:166]
 
 [kube-cluster:children]
 master
@@ -198,15 +198,15 @@ ping test
 ansible -i hosts.ini all -m ping
 ```
 ```
-192.168.0.164 | SUCCESS => {
+192.168.22.164 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-192.168.0.165 | SUCCESS => {
+192.168.22.165 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-192.168.0.166 | SUCCESS => {
+192.168.22.166 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
@@ -219,9 +219,9 @@ ansible-playbook site.yaml
 
 ```
 PLAY RECAP ******************************************************************************************
-192.168.0.164              : ok=28   changed=22   unreachable=0    failed=0
-192.168.0.165              : ok=20   changed=15   unreachable=0    failed=0
-192.168.0.166              : ok=20   changed=15   unreachable=0    failed=0
+192.168.22.164              : ok=28   changed=22   unreachable=0    failed=0
+192.168.22.165              : ok=20   changed=15   unreachable=0    failed=0
+192.168.22.166              : ok=20   changed=15   unreachable=0    failed=0
 
 ```
 
