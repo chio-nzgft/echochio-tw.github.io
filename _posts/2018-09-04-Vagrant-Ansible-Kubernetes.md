@@ -226,28 +226,24 @@ PLAY RECAP *********************************************************************
 ```
 
 ```
-[vagrant@master1 ~]$ export KUBECONFIG=/etc/kubernetes/admin.conf
-[vagrant@master1 ~]$ kubectl get node
-NAME      STATUS    ROLES     AGE       VERSION
-master1   Ready     master    27m       v1.11.2
-node1     Ready     <none>    26m       v1.11.2
-node2     Ready     <none>    26m       v1.11.2
-[vagrant@master1 ~]$ kubectl get po -n kube-system
-NAME                                   READY     STATUS              RESTARTS   AGE
-coredns-78fcdf6894-h8hg7               0/1       ContainerCreating   0          28m
-coredns-78fcdf6894-l4dh5               0/1       ContainerCreating   0          28m
-etcd-master1                           1/1       Running             0          28m
-kube-apiserver-master1                 1/1       Running             0          28m
-kube-controller-manager-master1        1/1       Running             0          28m
-kube-flannel-ds-6v8cb                  1/1       Running             0          27m
-kube-flannel-ds-lx9kj                  1/1       Running             0          27m
-kube-flannel-ds-wmmn6                  1/1       Running             0          28m
-kube-proxy-7rc6q                       1/1       Running             0          27m
-kube-proxy-g7vnk                       1/1       Running             0          27m
-kube-proxy-jc9m9                       1/1       Running             0          28m
-kube-scheduler-master1                 1/1       Running             0          28m
-kubernetes-dashboard-767dc7d4d-xnc9p   0/1       ContainerCreating   0          28m
-
+[root@master kubeadm-ansible]# export KUBECONFIG=/etc/kubernetes/admin.conf
+[root@master kubeadm-ansible]# kubectl get pods  -n kube-system
+NAME                                      READY     STATUS    RESTARTS   AGE
+calico-etcd-7qqn7                         1/1       Running   0          3m
+calico-kube-controllers-c4df9646f-cwb7m   1/1       Running   0          3m
+calico-node-flb9m                         2/2       Running   1          1m
+calico-node-ksq49                         2/2       Running   1          3m
+calico-node-zhqb5                         2/2       Running   0          1m
+coredns-78fcdf6894-d4znm                  1/1       Running   0          3m
+coredns-78fcdf6894-jk6l6                  1/1       Running   0          3m
+etcd-master                               1/1       Running   0          3m
+kube-apiserver-master                     1/1       Running   0          3m
+kube-controller-manager-master            1/1       Running   0          3m
+kube-proxy-4dphn                          1/1       Running   0          3m
+kube-proxy-8525v                          1/1       Running   0          1m
+kube-proxy-j54ct                          1/1       Running   0          1m
+kube-scheduler-master                     1/1       Running   0          3m
+kubernetes-dashboard-767dc7d4d-t65gj      1/1       Running   0          3m
 ```
 
 ```
