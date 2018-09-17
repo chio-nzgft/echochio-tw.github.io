@@ -16,54 +16,74 @@ https://docs.microsoft.com/zh-tw/powershell/wmf/5.1/install-configure
 ```
 
 設定 
-E:\vagrant\kube1\Vagrantfile
+E:\vagrant\Vagrantfile
 ```
-Vagrant.configure("2") do |kube1|
-  kube1.vm.box = "bento/centos-7.5"
-  kube1.vm.define "kube1"
-  kube1.vm.network "public_network", use_dhcp_assigned_default_route: true
-	kube1.vm.provider "virtualbox" do |v|
-		v.memory = 2048
-		v.cpus = 4
-	end
-end
-```
-E:\vagrant\kube2\Vagrantfile
-```
-Vagrant.configure("2") do |kube2|
-  kube2.vm.box = "bento/centos-7.5"
-  kube2.vm.define "kube2"
-  kube2.vm.network "public_network", use_dhcp_assigned_default_route: true
-    kube2.vm.provider "virtualbox" do |v|
-		v.memory = 2048
-		v.cpus = 4
-	end
-end
-```
-E:\vagrant\kube3\Vagrantfile
-```
-Vagrant.configure("2") do |kube3|
-  kube3.vm.box = "bento/centos-7.5"
-  kube3.vm.define "kube3"
-  kube3.vm.network "public_network", use_dhcp_assigned_default_route: true
-    kube3.vm.provider "virtualbox" do |v|
-		v.memory = 1024
-		v.cpus = 4
-	end
-end
-```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "bento/centos-7.5"
+  # If you run into issues with Ansible complaining about executable permissions,
+  # comment the following statement and uncomment the next one.
+  config.vm.synced_folder ".", "/vagrant"
+  # config.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=700,fmode=600"]
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+  end
+  config.vm.define :master, primary: true do |master|
+    master.vm.network :forwarded_port, host: 8001, guest: 8001
+    master.vm.network :forwarded_port, host: 2201, guest: 22, id: "ssh", auto_correct: true
+    master.vm.network "private_network", ip: "192.168.22.164"
+	master.vm.hostname = "master"
+	master.vm.provision "shell", path: "bootstrap.sh"
+	master.vm.provision "shell", path: "install_ansible.sh"
+	
+  end
+  config.vm.define :node1 do |node1|
+    node1.vm.network :forwarded_port, host: 2202, guest: 22, id: "ssh", auto_correct: true
+    node1.vm.network "private_network", ip: "192.168.22.165"
+    node1.vm.hostname = "node1"
+	node1.vm.provision "shell", path: "bootstrap.sh"
+  end
+  config.vm.define :node2 do |node2|
+    node2.vm.network :forwarded_port, host: 2203, guest: 22, id: "ssh", auto_correct: true
+    node2.vm.network "private_network", ip: "192.168.22.166"
+    node2.vm.hostname = "node2"
+	node2.vm.provision "shell", path: "bootstrap.sh"
+  end
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+  end
+# if Vagrant.has_plugin?("vagrant-proxyconf")
+#   config.proxy.http     = "http://proxy.company.com:8080/"
+#   config.proxy.https    = "http://proxy.company.com:8080/"
+#   config.proxy.no_proxy = "localhost,127.0.0.1"
+# end
+end
+```
+E:\vagrant\bootstrap.sh
+```
+cat << 'EOF' >> /etc/hosts
+192.168.22.164 master
+192.168.22.165 node1
+192.168.22.166 node2
+EOF
+echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+yum -y update
+setenforce 0
+sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+```
+E:\vagrant\install_ansible.sh
+```
+yum -y install epel-release
+yum -y update
+yum -y install ansible python-netaddr git
+```
 開始安裝
 ```
-Vagrant up --provider=virtualbox
-```
-
-同樣方式安裝 kube2 兩台 virtualbox 
-```
-E:\vagrant\kube2>Vagrant up --provider=virtualbox
-Bringing machine 'kube2' up with 'virtualbox' provider..
-==> kube2: Importing base box 'bento/centos-7.5'...
-Progress: 50%
+Vagrant up
 ```
 
 裝完後看狀況
@@ -74,30 +94,13 @@ vagrant global-status
 ```
 id       name   provider   state   directory
 -----------------------------------------------------------------------
-f6ace63  kube1  virtualbox running C:/vagrant/kube1
-5b94637  kube2  virtualbox running C:/vagrant/kube2
-0da4a16  kube3  virtualbox running C:/vagrant/kube3
+f6ace63  master  virtualbox running C:/vagrant
+5b94637  node1  virtualbox running C:/vagrant
+0da4a16  node2  virtualbox running C:/vagrant
 
 ```
-ssh 到 kube1
-```
-vagrant ssh f6ace63
-``` 
-改一下 vagrant 帳號的密碼 ( defailt 密碼是 vagrant)
+ssh 到 master
 
-利用 mRemoteNG ssh 到 127.0.0.1:2222 , 127.0.0.1:2200 , 127.0.0.1:2201   這樣比較好操作
-
-進入 kube1  安裝用 Ansible 來部屬 kubemaster 
-```
-sudo yum -y install epel-release
-sudo yum -y update
-sudo yum -y install ansible python-netaddr git
-sudo cat >>/etc/hosts<<EOF
-192.168.0.164 kube1 master1
-192.168.0.165 kube2 node1
-192.168.0.166 kube3 node2
-EOF
-```
 sudo vi /etc/ansible/ansible.cfg
 ```
 [defaults]
@@ -153,7 +156,6 @@ node
 ```
  group_vars/all.yml
 ```
-
 # Ansible
 # ansible_user: root
 
