@@ -373,4 +373,20 @@ namespace:  11 bytes
 token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWJ6eDRnIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI4Y2E2M2NkOC1iYTM2LTExZTgtYWYyOC0wODAwMjc4YmM5M2YiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.W7jJEqFUoycbhudoXWjStc6rV5FZDPlLK6RVmkNoevrLu9J-RBmqQ4oJDsODUO2WPFov3_Rdvu_4cG-_bf1bNRxRmo4aQryPe1nF1OC_YBHZEOiz_J8C0F3TTwYILZkuJ9fFZtcrmbDCBBUzGCaBTytxl3Ga5sdxAxiKgnT5oZs73Jcm_G8iE4B1o6hacdDREFeLDTeujhdk_0EhGtA0o9Iq6AnEJEypTjw9dRLHGlGTGz4ZwmqulJK_5QKMIU_3-jBEwlwDZxqTRxh3R4h6aGerXo9l2sEjoWtMPevU01KvwRkK1pxru-xwOX0mN2PCpcHh4cL7Pg9_EAXlJwjpKQ
 ```
 
+<img src="/images/posts/kubernetes/p1.png">
 
+<img src="/images/posts/kubernetes/p2.png">
+
+<img src="/images/posts/kubernetes/p3.png">
+
+<img src="/images/posts/kubernetes/p4.png">
+
+<img src="/images/posts/kubernetes/p5.png">
+
+<img src="/images/posts/kubernetes/p6.png">
+
+<img src="/images/posts/kubernetes/p7.png">
+
+<img src="/images/posts/kubernetes/p8.png">
+
+<img src="/images/posts/kubernetes/p9.png">
