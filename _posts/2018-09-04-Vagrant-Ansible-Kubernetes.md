@@ -247,24 +247,8 @@ kubernetes-dashboard-767dc7d4d-t65gj      1/1       Running   0          3m
 ```
 
 ```
-[vagrant@master1 ~]$  kubectl apply -f https://k8s.io/docs/tasks/run-application/deployment.yaml
-[vagrant@master1 ~]$  kubectl get pods --all-namespaces
-NAMESPACE     NAME                                   READY     STATUS              RESTARTS   AGE
-default       nginx-deployment-67594d6bf6-htd4n      0/1       ContainerCreating   0          34s
-default       nginx-deployment-67594d6bf6-r9wds      0/1       ContainerCreating   0          34s
-kube-system   coredns-78fcdf6894-h8hg7               0/1       ContainerCreating   0          32m
-kube-system   coredns-78fcdf6894-l4dh5               0/1       ContainerCreating   0          32m
-kube-system   etcd-master1                           1/1       Running             0          32m
-kube-system   kube-apiserver-master1                 1/1       Running             0          32m
-kube-system   kube-controller-manager-master1        1/1       Running             0          32m
-kube-system   kube-flannel-ds-6v8cb                  1/1       Running             0          31m
-kube-system   kube-flannel-ds-lx9kj                  1/1       Running             0          31m
-kube-system   kube-flannel-ds-wmmn6                  1/1       Running             0          32m
-kube-system   kube-proxy-7rc6q                       1/1       Running             0          31m
-kube-system   kube-proxy-g7vnk                       1/1       Running             0          31m
-kube-system   kube-proxy-jc9m9                       1/1       Running             0          32m
-kube-system   kube-scheduler-master1                 1/1       Running             0          32m
-kube-system   kubernetes-dashboard-767dc7d4d-xnc9p   0/1       ContainerCreating   0          32m
-[vagrant@master1 ~]$
+[root@master kubeadm-ansible]# kubectl -n kube-system get service kubernetes-dashboard
+NAME                   TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+kubernetes-dashboard   ClusterIP   10.101.53.84   <none>        443/TCP   15m
 ```
 
