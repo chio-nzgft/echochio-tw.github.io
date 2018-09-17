@@ -94,6 +94,15 @@ cd.yml
 ```
 
 ```
+java
+
+- name: Package are present
+  yum:
+    name: java-1.8.0-openjdk
+    state: present
+```
+
+```
 golang-service.yml
 ```
 給 PROD 虛擬機用 ....
