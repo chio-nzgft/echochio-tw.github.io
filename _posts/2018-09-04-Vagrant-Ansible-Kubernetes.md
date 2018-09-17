@@ -286,6 +286,91 @@ vagrant reload
 https://127.0.0.1:32162/#!/login
 ```
 
+設定 token
+```
+kubectl -n kube-system get secret admin-token-nwphb -o jsonpath={.data.token}|base64 -d
+```
 
+```
+cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+   name: admin-user
+   namespace: kube-system
+EOF
+```
+
+```
+[root@master ~]# kubectl describe clusterrole/cluster-admin
+
+Name:         cluster-admin
+Labels:       kubernetes.io/bootstrapping=rbac-defaults
+Annotations:  rbac.authorization.kubernetes.io/autoupdate=true
+PolicyRule:
+  Resources  Non-Resource URLs  Resource Names  Verbs
+  ---------  -----------------  --------------  -----
+  *.*        []                 []              [*]
+             [*]                []              [*]
+
+```
+```  
+cat <<EOF | kubectl create -f -
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+name: admin-user
+roleRef:
+   apiGroup: rbac.authorization.k8s.io
+   kind: ClusterRole
+   name: cluster-admin
+subjects:
+ - kind: ServiceAccount
+   name: admin-user
+   namespace: kube-system
+EOF
+```
+
+```
+[root@master ~]# kubectl describe ClusterRoleBinding/admin-user
+ Name:         cluster-admin
+Labels:       kubernetes.io/bootstrapping=rbac-defaults
+Annotations:  rbac.authorization.kubernetes.io/autoupdate=true
+PolicyRule:
+  Resources  Non-Resource URLs  Resource Names  Verbs
+  ---------  -----------------  --------------  -----
+  *.*        []                 []              [*]
+             [*]                []              [*]
+[root@master ~]# [root@master ~]# kubectl describe ClusterRoleBinding/admin-user
+-bash: [root@master: command not found
+[root@master ~]#  kubectl describe ClusterRoleBinding/admin-user
+Name:         admin-user
+Labels:       <none>
+Annotations:  <none>
+Role:
+  Kind:  ClusterRole
+  Name:  cluster-admin
+Subjects:
+  Kind            Name        Namespace
+  ----            ----        ---------
+  ServiceAccount  admin-user  kube-system
+```
+
+``` 
+[root@master ~]# kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+Name:         admin-user-token-bzx4g
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name=admin-user
+              kubernetes.io/service-account.uid=8ca63cd8-ba36-11e8-af28-0800278bc93f
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1025 bytes
+namespace:  11 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWJ6eDRnIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI4Y2E2M2NkOC1iYTM2LTExZTgtYWYyOC0wODAwMjc4YmM5M2YiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.W7jJEqFUoycbhudoXWjStc6rV5FZDPlLK6RVmkNoevrLu9J-RBmqQ4oJDsODUO2WPFov3_Rdvu_4cG-_bf1bNRxRmo4aQryPe1nF1OC_YBHZEOiz_J8C0F3TTwYILZkuJ9fFZtcrmbDCBBUzGCaBTytxl3Ga5sdxAxiKgnT5oZs73Jcm_G8iE4B1o6hacdDREFeLDTeujhdk_0EhGtA0o9Iq6AnEJEypTjw9dRLHGlGTGz4ZwmqulJK_5QKMIU_3-jBEwlwDZxqTRxh3R4h6aGerXo9l2sEjoWtMPevU01KvwRkK1pxru-xwOX0mN2PCpcHh4cL7Pg9_EAXlJwjpKQ
+```
 
 
