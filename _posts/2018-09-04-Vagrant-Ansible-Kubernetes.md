@@ -390,3 +390,124 @@ token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2V
 <img src="/images/posts/kubernetes/p8.png">
 
 <img src="/images/posts/kubernetes/p9.png">
+
+yml  file Deploy
+```
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: busybox-go-web
+  labels:
+    app: busybox-go-web
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: busybox-go-web
+    spec:
+      containers:
+      - name: busybox-go-web
+        image: echochio/busybox-go-web
+        ports:
+        - containerPort: 8080
+``` 
+
+yml  file Service
+```
+kind: Service
+apiVersion: v1
+metadata:
+  name: busybox-go-web-service
+spec:
+  ports:
+    - name: http
+      port: 8080
+      nodePort: 30062
+  selector:
+    app: busybox-go-web
+  type: NodePort
+```
+yml file job (斷線自動起 ... 可不設定)
+```
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: busybox-go-web
+spec:
+  template:
+    metadata:
+      name: busybox-go-web
+    spec:
+      containers:
+      - name: busybox-go-web
+        image: echochio/busybox-go-web
+        command:
+          - sleep
+          - "30"
+      restartPolicy: Never
+```
+
+
+shell make Deploy
+```
+cat << 'EOF' >> busybox-go-web.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: busybox-go-web
+  labels:
+    app: busybox-go-web
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: busybox-go-web
+    spec:
+      containers:
+      - name: busybox-go-web
+        image: echochio/busybox-go-web
+        ports:
+        - containerPort: 8080
+EOF
+
+[root@master ~]#  kubectl create -f busybox-go-web.yaml
+deployment "busybox-go-web" created
+[root@master ~]# kubectl get rs,pod,deployment
+NAME                                             DESIRED   CURRENT   READY     AGE
+replicaset.extensions/busybox-go-web-84fb577bd   2         2         2         16h
+
+NAME                                 READY     STATUS      RESTARTS   AGE
+pod/busybox-go-web-84fb577bd-bq6gz   1/1       Running     0          16h
+pod/busybox-go-web-84fb577bd-nv4p9   1/1       Running     0          16h
+pod/busybox-go-web-rqzd7             0/1       Completed   0          8m
+
+NAME                                   DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deployment.extensions/busybox-go-web   2         2         2            2           16h
+````
+
+shell make Service 
+```
+[root@master ~]#  kubectl expose deployment busybox-go-web --type=NodePort
+service/busybox-go-web exposed
+[root@master ~]# kubectl describe services busybox-go-web
+Name:                     busybox-go-web
+Namespace:                default
+Labels:                   run=busybox-go-web
+Annotations:              <none>
+Selector:                 run=busybox-go-web
+Type:                     NodePort
+IP:                       10.101.98.236
+Port:                     <unset>  8080/TCP
+TargetPort:               8080/TCP
+NodePort:                 <unset>  32711/TCP
+Endpoints:                10.244.104.3:8080,10.244.166.130:8080
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+[root@master ~]# kubectl get service
+NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+busybox-go-web   NodePort    10.101.98.236   <none>        8080:32711/TCP   16s
+kubernetes       ClusterIP   10.96.0.1       <none>        443/TCP          21h
+```
