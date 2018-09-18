@@ -508,7 +508,7 @@ External Traffic Policy:  Cluster
 Events:                   <none>
 [root@master ~]# kubectl get service
 NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-busybox-go-web   NodePort    10.101.98.236   <none>        80:30716/TCP     16s
+nginx	         NodePort    10.101.98.236   <none>        80:30716/TCP     16s
 kubernetes       ClusterIP   10.96.0.1       <none>        443/TCP          21h
 ```
 
