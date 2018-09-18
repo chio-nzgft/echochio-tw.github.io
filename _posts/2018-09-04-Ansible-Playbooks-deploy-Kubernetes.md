@@ -41,7 +41,7 @@ k8s-m1
 /etc/keepalived/keepalived.conf
 ```
 vrrp_script chk_haproxy {
-    script "systemctl is-active haproxy"
+    script "/usr/bin/systemctl is-active haproxy"
 }
 
 vrrp_instance VI_1 {
@@ -62,7 +62,7 @@ k8s-m2
 /etc/keepalived/keepalived.conf
 ```
 vrrp_script chk_haproxy {
-    script "systemctl is-active haproxy"
+    script "/usr/bin/systemctl is-active haproxy"
 }
 
 vrrp_instance VI_1 {
