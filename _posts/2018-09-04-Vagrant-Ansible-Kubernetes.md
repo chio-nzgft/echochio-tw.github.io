@@ -14,6 +14,10 @@ win7 install Vagrant
 ```
 https://docs.microsoft.com/zh-tw/powershell/wmf/5.1/install-configure
 ```
+檔案全部在 
+
+https://github.com/echochio-tw/kubeadm-ansible.git
+
 
 設定 
 E:\vagrant\Vagrantfile
@@ -139,7 +143,7 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.22.165
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.22.166
 ```
 ```
-git clone https://github.com/kairen/kubeadm-ansible.git
+git clone https://github.com/echochio-tw/kubeadm-ansible.git
 cd kubeadm-ansible/
 ```
  hosts.ini
