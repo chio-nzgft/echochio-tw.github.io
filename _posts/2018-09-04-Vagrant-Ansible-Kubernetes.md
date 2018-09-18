@@ -14,10 +14,10 @@ win7 install Vagrant
 ```
 https://docs.microsoft.com/zh-tw/powershell/wmf/5.1/install-configure
 ```
-檔案全部在 
-
-https://github.com/echochio-tw/kubeadm-ansible.git
-
+Vagrant-centos 在 
+```
+https://github.com/echochio-tw/kubeadm-ansible/tree/master/Vagrantfile-centos
+```
 
 設定 
 E:\vagrant\Vagrantfile
