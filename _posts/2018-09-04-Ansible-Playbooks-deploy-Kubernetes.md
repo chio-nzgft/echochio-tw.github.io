@@ -79,7 +79,9 @@ vrrp_instance VI_1 {
 }
 ```
 ```
+systemctl enable haproxy
 systemctl enable keepalived
+systemctl start haproxy
 systemctl start keepalived
 ```
 
