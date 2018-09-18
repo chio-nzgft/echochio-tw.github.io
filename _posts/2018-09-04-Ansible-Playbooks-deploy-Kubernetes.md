@@ -46,7 +46,7 @@ vrrp_script chk_haproxy {
 
 vrrp_instance VI_1 {
     state MASTER
-    interface eth0
+    interface eth1
     virtual_router_id 1
     priority 100
     virtual_ipaddress {
@@ -67,7 +67,7 @@ vrrp_script chk_haproxy {
 
 vrrp_instance VI_1 {
     state BACKUP
-    interface eth0
+    interface eth1
     virtual_router_id 1
     priority 101
     virtual_ipaddress {
