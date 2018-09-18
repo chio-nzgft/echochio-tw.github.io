@@ -440,7 +440,7 @@ spec:
       name: nginx
     spec:
       containers:
-      - name:nginx
+      - name: nginx
         image: nginx
         command:
           - sleep
