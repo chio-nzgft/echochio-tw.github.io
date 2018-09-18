@@ -18,30 +18,48 @@ EOF
 ```
 yum -y install haproxy keepalived
 ```
-vi /etc/haproxy/haproxy.cfg
+
 ```
-frontend api *:6443
-    default_backend    api
+rm -rf /etc/haproxy/haproxy.cfg
+cat << 'EOF' >> /etc/haproxy/haproxy.cfg
+global
+  log 127.0.0.1 local0
+  log 127.0.0.1 local1 notice
+  tune.ssl.default-dh-param 2048
 
-frontend etcd *:2379
-    default_backend    etcd
+defaults
+  log global
+  mode http
+  option dontlognull
+  timeout connect 5000ms
+  timeout client 1800000ms
+  timeout server 1800000ms
 
-backend api
-    balance   leastconn
-    server    k8s-m1  k8s-m1:6443  check
-    server    k8s-m2  k8s-m2:6443  check  backup
+listen stats
+    bind :9090
+    mode http
+    balance
+    stats uri /haproxy_stats
+    stats auth admin:admin123
+    stats admin if TRUE
 
-backend etcd
-    balance   leastconn
-    server    master1  k8s-m1:2379  check
-    server    master2  k8s-m2:2379  check  backup
+frontend kube-apiserver-https
+   mode tcp
+   bind :8443
+   default_backend kube-apiserver-backend
+
+backend kube-apiserver-backend
+    mode tcp
+    server kube-apiserver1 k8s-m1:6443 check
+    server kube-apiserver2 k8s-m2:6443 check
+EOF
 ```
 k8s-m1
-
-/etc/keepalived/keepalived.conf
 ```
+rm -rf /etc/keepalived/keepalived.conf
+cat << 'EOF' >> /etc/keepalived/keepalived.conf
 vrrp_script chk_haproxy {
-    script "/usr/bin/systemctl is-active haproxy"
+    script "systemctl is-active haproxy"
 }
 
 vrrp_instance VI_1 {
@@ -50,33 +68,35 @@ vrrp_instance VI_1 {
     virtual_router_id 1
     priority 100
     virtual_ipaddress {
-        192.168.0.222
+        192.168.0.220
     }
     track_script {
         chk_haproxy
     }
 }
+EOF
 ```
 k8s-m2
-
-/etc/keepalived/keepalived.conf
 ```
+rm -rf /etc/keepalived/keepalived.conf
+cat << 'EOF' >> /etc/keepalived/keepalived.conf
 vrrp_script chk_haproxy {
-    script "/usr/bin/systemctl is-active haproxy"
+    script "systemctl is-active haproxy"
 }
 
 vrrp_instance VI_1 {
     state BACKUP
     interface eth1
     virtual_router_id 1
-    priority 101
+    priority 100
     virtual_ipaddress {
-        192.168.0.222
+        192.168.0.220
     }
     track_script {
         chk_haproxy
     }
 }
+EOF
 ```
 ```
 systemctl enable haproxy
