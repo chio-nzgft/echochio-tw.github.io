@@ -396,21 +396,21 @@ yml  file Deploy
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: busybox-go-web
+  name: nginx
   labels:
-    app: busybox-go-web
+    app: nginx
 spec:
   replicas: 2
   template:
     metadata:
       labels:
-        app: busybox-go-web
+        app: nginx
     spec:
       containers:
-      - name: busybox-go-web
-        image: echochio/busybox-go-web
+      - name: nginx
+        image: nginx
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 ``` 
 
 yml  file Service
@@ -418,14 +418,14 @@ yml  file Service
 kind: Service
 apiVersion: v1
 metadata:
-  name: busybox-go-web-service
+  name: nginx-service
 spec:
   ports:
     - name: http
-      port: 8080
-      nodePort: 30062
+      port: 80
+      nodePort: 30716
   selector:
-    app: busybox-go-web
+    app: nginx
   type: NodePort
 ```
 yml file job (斷線自動起 ... 可不設定)
@@ -433,15 +433,15 @@ yml file job (斷線自動起 ... 可不設定)
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: busybox-go-web
+  name: nginx
 spec:
   template:
     metadata:
-      name: busybox-go-web
+      name: nginx
     spec:
       containers:
-      - name: busybox-go-web
-        image: echochio/busybox-go-web
+      - name:nginx
+        image: nginx
         command:
           - sleep
           - "30"
@@ -451,63 +451,64 @@ spec:
 
 shell make Deploy
 ```
-cat << 'EOF' >> busybox-go-web.yaml
+cat << 'EOF' >> nginx.yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: busybox-go-web
+  name: nginx
   labels:
-    app: busybox-go-web
+    app: nginx
 spec:
   replicas: 2
   template:
     metadata:
       labels:
-        app: busybox-go-web
+        app: nginx
     spec:
       containers:
-      - name: busybox-go-web
-        image: echochio/busybox-go-web
+      - name: nginx
+        image: nginx
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 EOF
 
-[root@master ~]#  kubectl create -f busybox-go-web.yaml
-deployment "busybox-go-web" created
+[root@master ~]#  kubectl create -f nginx.yaml
+deployment "nginx" created
+[root@master ~]# kubectl get rs,pod,deployment
 [root@master ~]# kubectl get rs,pod,deployment
 NAME                                             DESIRED   CURRENT   READY     AGE
-replicaset.extensions/busybox-go-web-84fb577bd   2         2         2         16h
+replicaset.extensions/nginx-966857787            2         2         2         8m
 
-NAME                                 READY     STATUS      RESTARTS   AGE
-pod/busybox-go-web-84fb577bd-bq6gz   1/1       Running     0          16h
-pod/busybox-go-web-84fb577bd-nv4p9   1/1       Running     0          16h
-pod/busybox-go-web-rqzd7             0/1       Completed   0          8m
+NAME                                 READY     STATUS    RESTARTS   AGE
+pod/nginx-966857787-jbpj7            1/1       Running   1          8m
+pod/nginx-966857787-vpzpd            1/1       Running   1          8m
 
 NAME                                   DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deployment.extensions/busybox-go-web   2         2         2            2           16h
+deployment.extensions/nginx            2         2         2            2           8m
 ````
 
 shell make Service 
 ```
-[root@master ~]#  kubectl expose deployment busybox-go-web --type=NodePort
-service/busybox-go-web exposed
-[root@master ~]# kubectl describe services busybox-go-web
-Name:                     busybox-go-web
+[root@master ~]#  kubectl expose deployment nginx --type=NodePort
+service/nginx exposed
+[root@master ~]# kubectl describe services nginx
+Name:                     nginx
 Namespace:                default
-Labels:                   run=busybox-go-web
+Labels:                   run=nginx
 Annotations:              <none>
-Selector:                 run=busybox-go-web
+Selector:                 run=nginx
 Type:                     NodePort
 IP:                       10.101.98.236
-Port:                     <unset>  8080/TCP
-TargetPort:               8080/TCP
-NodePort:                 <unset>  32711/TCP
-Endpoints:                10.244.104.3:8080,10.244.166.130:8080
+Port:                     <unset>  80/TCP
+TargetPort:               80/TCP
+NodePort:                 <unset>  30716/TCP
+Endpoints:                10.244.104.3:80,10.244.166.130:80
 Session Affinity:         None
 External Traffic Policy:  Cluster
 Events:                   <none>
 [root@master ~]# kubectl get service
 NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-busybox-go-web   NodePort    10.101.98.236   <none>        8080:32711/TCP   16s
+busybox-go-web   NodePort    10.101.98.236   <none>        80:30716/TCP     16s
 kubernetes       ClusterIP   10.96.0.1       <none>        443/TCP          21h
 ```
+
