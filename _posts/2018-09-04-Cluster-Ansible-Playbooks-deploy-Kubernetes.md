@@ -412,8 +412,13 @@ ETCDCTL_API=3 etcdctl \
     --cacert=${PKI}/etcd-ca.pem \
     --cert=${PKI}/etcd.pem \
     --key=${PKI}/etcd-key.pem \
-    --endpoints="https://172.22.132.9:2379" \
+    --endpoints="https://127.0.0.1:2379" \
     member list
+```
+
+```
+43d16080ce52a959, started, master1, https://192.168.0.155:2380, https://192.168.0.155:2379
+a4e53d585466d56d, started, master2, https://192.168.0.156:2380, https://192.168.0.156:2379
 ```
 start nginx
 ```
