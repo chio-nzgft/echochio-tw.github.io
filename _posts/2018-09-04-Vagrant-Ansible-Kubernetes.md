@@ -163,7 +163,7 @@ service_cidr: "10.96.0.0/12"
 pod_network_cidr: "10.244.0.0/16"
 
 # Network implementation('flannel', 'calico')
-network: flannel
+network: calico
 
 # Change this to an appropriate interface, preferably a private network.
 # For example, on DigitalOcean, you would use eth1 as that is the default private network interface.
