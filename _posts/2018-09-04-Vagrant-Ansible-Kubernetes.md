@@ -14,7 +14,8 @@ win7 install Vagrant
 ```
 https://docs.microsoft.com/zh-tw/powershell/wmf/5.1/install-configure
 ```
-Vagrant-centos 在 
+Vagrant-centos 在 (用此 script 可以直接跳到 .....ansible-playbook site.yaml)
+
 ```
 https://github.com/echochio-tw/kubeadm-ansible/tree/master/Vagrantfile-centos
 ```
@@ -36,15 +37,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
   end
-  config.vm.define :master, primary: true do |master|
-    master.vm.network :forwarded_port, host: 8001, guest: 8001
-    master.vm.network :forwarded_port, host: 2201, guest: 22, id: "ssh", auto_correct: true
-    master.vm.network "private_network", ip: "192.168.22.164"
-	master.vm.hostname = "master"
-	master.vm.provision "shell", path: "bootstrap.sh"
-	master.vm.provision "shell", path: "install_ansible.sh"
-	
-  end
   config.vm.define :node1 do |node1|
     node1.vm.network :forwarded_port, host: 2202, guest: 22, id: "ssh", auto_correct: true
     node1.vm.network "private_network", ip: "192.168.22.165"
@@ -56,6 +48,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node2.vm.network "private_network", ip: "192.168.22.166"
     node2.vm.hostname = "node2"
 	node2.vm.provision "shell", path: "bootstrap.sh"
+  end
+  config.vm.define :master, primary: true do |master|
+    master.vm.network :forwarded_port, host: 8001, guest: 8001
+	master.vm.network :forwarded_port, host: 32162, guest: 32162
+	master.vm.network :forwarded_port, host: 30716, guest: 30716
+	master.vm.network :forwarded_port, host: 2201, guest: 22, id: "ssh", auto_correct: true
+    master.vm.network "private_network", ip: "192.168.22.164"
+	master.vm.hostname = "master"
+	master.vm.provision "shell", path: "bootstrap.sh"
+	master.vm.provision "shell", path: "install_ansible.sh"
   end
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box
@@ -85,7 +87,7 @@ yum -y install epel-release
 yum -y update
 yum -y install ansible python-netaddr git
 ```
-開始安裝
+開始安裝 
 ```
 Vagrant up
 ```
@@ -105,44 +107,26 @@ f6ace63  master  virtualbox running C:/vagrant
 ```
 ssh 到 master
 
-sudo vi /etc/ansible/ansible.cfg
 ```
-[defaults]
-host_key_checking = False
-```
-
-```
-# ssh-keygen -t rsa
-```
-```
-Generating public/private rsa key pair.
-Enter file in which to save the key (/root/.ssh/id_rsa):
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /root/.ssh/id_rsa.
-Your public key has been saved in /root/.ssh/id_rsa.pub.
-The key fingerprint is:
-SHA256:thYCXzkAlx7Rj3ncB2/Pu4yzwJpgo6YdtnpG8RDem+I root@localhost.localdomain
-The key's randomart image is:
-+---[RSA 2048]----+
-|    ..++         |
-|     oo...  .    |
-|    o.o.+= . o   |
-|     *.oo.+ . +  |
-|      * S.   o o |
-|     o * o.     o|
-|    oo.+o  o    .|
-|    oE=.o o ..o. |
-|   o*+   o   ooo.|
-+----[SHA256]-----+
+跳過 host_key_checking
+sed -i 's/#host_key_checking = False/host_key_checking = False/g' /etc/ansible/ansible.cfg
 ```
 
 ```
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.22.164
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.22.165
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.22.166
+產生 ssh key
+rm -rf /root/.ssh
+ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -N ""
+```
+
+```
+複製 key .....
+yum install -y sshpass
+sshpass -p "vagrant" ssh-copy-id -i ~/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@master
+sshpass -p "vagrant" ssh-copy-id -i ~/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node1
+sshpass -p "vagrant" ssh-copy-id -i ~/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@node2
 ```
 ```
+抓 kubeadm-ansible.git
 git clone https://github.com/echochio-tw/kubeadm-ansible.git
 cd kubeadm-ansible/
 ```
