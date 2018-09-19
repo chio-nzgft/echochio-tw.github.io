@@ -362,20 +362,38 @@ service/kubernetes-dashboard   ClusterIP   10.111.153.203   192.168.0.155   443/
 login with token
 
 ```
-kubectl -n kube-system get secret |grep kubernetes-dashboard-token
-```
-```
-kubernetes-dashboard-token-czk49                 kubernetes.io/service-account-token   3         1h
-```
-```
-kubectl -n kube-system describe secret kubernetes-dashboard-token-czk49
-```
-```
-Name:         kubernetes-dashboard-token-czk49
+cat <<EOF | kubectl create -f -
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: admin
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: admin
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin
+  namespace: kube-system
+  labels:
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
+EOF
+
+[root@master1 kube-ansible]# kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+Name:         admin-token-l4976
 Namespace:    kube-system
 Labels:       <none>
-Annotations:  kubernetes.io/service-account.name=kubernetes-dashboard
-              kubernetes.io/service-account.uid=934af6cf-b0c9-11e8-a5c0-0800278bc93f
+Annotations:  kubernetes.io/service-account.name=admin
+              kubernetes.io/service-account.uid=0283efe0-bba9-11e8-b412-0800278bc93f
 
 Type:  kubernetes.io/service-account-token
 
@@ -383,7 +401,8 @@ Data
 ====
 ca.crt:     1428 bytes
 namespace:  11 bytes
-token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi1jems0OSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjkzNGFmNmNmLWIwYzktMTFlOC1hNWMwLTA4MDAyNzhiYzkzZiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTprdWJlcm5ldGVzLWRhc2hib2FyZCJ9.XRM2TAOAmUTbO-sxwHQBnjzlSQJfjrQNReiqbtGeMs8AkayEosMUewE3VcdvyyDnlbOVuChAj_Tg4U0bE01UmMcesuquOd1KCziUYUxabeQoKMNdCHRrz7wi1pVpZhrgSnMTsgOZEY_Pm1EUfE7yu-XUjQu5rrdKpgHMZEN40ZBEsBHZxfFouFupObPRIxoNuqmUjD9Jgs_xrmFPjidnH-q7nolfuUL7L0LcFcbVC_cIJvnhpHqHMpmFke0Qb7NPhhjOzw3FjOK2EUeX67ZcFTTld6ElAxvH-HiNhaqKDlmEkycJz-EbeEuWMZHTj8HnGpi-18_lI8_3ucAXNrqGnw
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi10b2tlbi1sNDk3NiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJhZG1pbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjAyODNlZmUwLWJiYTktMTFlOC1iNDEyLTA4MDAyNzhiYzkzZiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbiJ9.CSaiovNKe_IJPPD1FcZ9XuNuAOz5Ugezg05TeGTwQyMT4nMGDqZVAF4028y3gYIPouQ8Ml9ixOR5B5dTLH7Mvhrk4qfD4HU7PkPHKih78xJBbmn8-1CQLDmnoq54a_WSfn7ciotiukspa7Lue2gxIZmTG8RR8W-qvOW5kRw4weSE69wVHRonAG8GtA4uMbqC0vdtjAElUaMXWZkS52quiOM9rRswU2Sd909PsGducrFuu5doZUqsMu-g-swPkj1-F_tojeztEm_BvINYiojg3RJXcg_u52-KyhRXH4D-qeAgX9bLsQVZQxQo5K8PAGPwCWeFeaj2t6osUBdZKcfKAQ
+
 ```
 
 check ha
