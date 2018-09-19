@@ -104,6 +104,20 @@ systemctl enable keepalived
 systemctl start haproxy
 systemctl start keepalived
 ```
+chek HA ip 192.168.0.220
+```
+[root@master1 ~]# ping 192.168.0.220 -c 5
+PING 192.168.0.220 (192.168.0.220) 56(84) bytes of data.
+64 bytes from 192.168.0.220: icmp_seq=1 ttl=64 time=0.400 ms
+64 bytes from 192.168.0.220: icmp_seq=2 ttl=64 time=0.313 ms
+64 bytes from 192.168.0.220: icmp_seq=3 ttl=64 time=0.590 ms
+64 bytes from 192.168.0.220: icmp_seq=4 ttl=64 time=0.325 ms
+64 bytes from 192.168.0.220: icmp_seq=5 ttl=64 time=0.664 ms
+
+--- 192.168.0.220 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4000ms
+rtt min/avg/max/mdev = 0.313/0.458/0.664/0.144 ms
+```
 
 # k8s-m1 ...
 ```
