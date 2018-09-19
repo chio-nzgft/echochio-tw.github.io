@@ -299,21 +299,24 @@ metadata:
     addonmanager.kubernetes.io/mode: Reconcile
 EOF
 
-[root@master1 kube-ansible]# kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
-Name:         admin-token-l4976
+[root@master kubeadm-ansible]# kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}') |grep "admin-token"
+Name:         admin-token-64cq9
+
+[root@master kubeadm-ansible]# kubectl -n kube-system describe secret admin-token-64cq9
+Name:         admin-token-64cq9
 Namespace:    kube-system
 Labels:       <none>
 Annotations:  kubernetes.io/service-account.name=admin
-              kubernetes.io/service-account.uid=0283efe0-bba9-11e8-b412-0800278bc93f
+              kubernetes.io/service-account.uid=40c7f40f-bbe4-11e8-b802-0800278bc93f
 
 Type:  kubernetes.io/service-account-token
 
 Data
 ====
-ca.crt:     1428 bytes
+ca.crt:     1025 bytes
 namespace:  11 bytes
-token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi10b2tlbi1sNDk3NiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJhZG1pbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjAyODNlZmUwLWJiYTktMTFlOC1iNDEyLTA4MDAyNzhiYzkzZiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbiJ9.CSaiovNKe_IJPPD1FcZ9XuNuAOz5Ugezg05TeGTwQyMT4nMGDqZVAF4028y3gYIPouQ8Ml9ixOR5B5dTLH7Mvhrk4qfD4HU7PkPHKih78xJBbmn8-1CQLDmnoq54a_WSfn7ciotiukspa7Lue2gxIZmTG8RR8W-qvOW5kRw4weSE69wVHRonAG8GtA4uMbqC0vdtjAElUaMXWZkS52quiOM9rRswU2Sd909PsGducrFuu5doZUqsMu-g-swPkj1-F_tojeztEm_BvINYiojg3RJXcg_u52-KyhRXH4D-qeAgX9bLsQVZQxQo5K8PAGPwCWeFeaj2t6osUBdZKcfKAQ
-
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi10b2tlbi02NGNxOSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJhZG1pbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjQwYzdmNDBmLWJiZTQtMTFlOC1iODAyLTA4MDAyNzhiYzkzZiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbiJ9.UilRq1LJoGI5auUHK3IY83dHwIMDKKyLs8SLmzxmmRpki7TSoEuk4w8DHpZPYwQvrK4bSivXv_GOkCz-cFucBe_c4-DtKSiGO_HBKhLQN3o8YMHge73rwuPG2tV8wO_3OBSLDkZPfDPVj7MFjlK2d_V076m0xxgnS8P8eXtkTY13pYDhP_CA5oQMliAZ4eM68HLfz8EzLFspJOIM-_Fu23IVBUU2Ut3HKjphYuu6SOKR8F4yNfhbPC3F7U6uxgMOzXxOIimhbUTqqbAroSkQee3cqQP7Xa3DSWE4ILd5rhFS9v7M6_FP7RYoGvgd7M06hvuMNcz4V8TB4MD02DbMdA
+[root@master kubeadm-ansible]#
 ```
 
 <img src="/images/posts/kubernetes/p1.png">
