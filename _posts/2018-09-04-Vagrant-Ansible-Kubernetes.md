@@ -292,10 +292,6 @@ https://127.0.0.1:32162/#!/login
 
 設定 token
 ```
-kubectl -n kube-system get secret admin-token-nwphb -o jsonpath={.data.token}|base64 -d
-```
-
-```
 cat <<EOF | kubectl create -f -
 apiVersion: v1
 kind: ServiceAccount
