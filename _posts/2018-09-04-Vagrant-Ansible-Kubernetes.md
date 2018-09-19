@@ -248,113 +248,72 @@ Starting to serve on 127.0.0.1:8001
 ```
 [root@master kubeadm-ansible]# kubectl -n kube-system edit service kubernetes-dashboard
 ```
-
+加入 externalIPs (eth0 那個)
 ``` 
-更改 type: ClusterIP 
-改成 type: NodePort
+spec:
+  clusterIP: 10.111.153.203
+  externalIPs:
+  - 10.0.2.15
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 8443
 ```
 
 ```
 [root@master ~]#  kubectl -n kube-system get service kubernetes-dashboard
 NAME                   TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)         AGE
-kubernetes-dashboard   NodePort   10.101.53.84   <none>        443:32162/TCP   1h
-```
-
-改 Vagrantfile 將 port 32162 forwaord 出來
-```
-master.vm.network :forwarded_port, host: 32162, guest: 32162
-```
-重新載入 Vagrant
-```
-vagrant reload
+kubernetes-dashboard   NodePort   10.101.53.84   10.0.2.15     443/TCP         1h
 ```
 
 用 host firefox 開 ....
 ```
-https://127.0.0.1:32162/#!/login
+https://127.0.0.1/#!/login
 ```
 
 設定 token
 ```
 cat <<EOF | kubectl create -f -
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: admin
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: admin
+  namespace: kube-system
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-   name: admin-user
-   namespace: kube-system
+  name: admin
+  namespace: kube-system
+  labels:
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
 EOF
-```
 
-```
-[root@master ~]# kubectl describe clusterrole/cluster-admin
-
-Name:         cluster-admin
-Labels:       kubernetes.io/bootstrapping=rbac-defaults
-Annotations:  rbac.authorization.kubernetes.io/autoupdate=true
-PolicyRule:
-  Resources  Non-Resource URLs  Resource Names  Verbs
-  ---------  -----------------  --------------  -----
-  *.*        []                 []              [*]
-             [*]                []              [*]
-
-```
-```  
-cat <<EOF | kubectl create -f -
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-name: admin-user
-roleRef:
-   apiGroup: rbac.authorization.k8s.io
-   kind: ClusterRole
-   name: cluster-admin
-subjects:
- - kind: ServiceAccount
-   name: admin-user
-   namespace: kube-system
-EOF
-```
-
-```
-[root@master ~]# kubectl describe ClusterRoleBinding/admin-user
- Name:         cluster-admin
-Labels:       kubernetes.io/bootstrapping=rbac-defaults
-Annotations:  rbac.authorization.kubernetes.io/autoupdate=true
-PolicyRule:
-  Resources  Non-Resource URLs  Resource Names  Verbs
-  ---------  -----------------  --------------  -----
-  *.*        []                 []              [*]
-             [*]                []              [*]
-[root@master ~]# [root@master ~]# kubectl describe ClusterRoleBinding/admin-user
--bash: [root@master: command not found
-[root@master ~]#  kubectl describe ClusterRoleBinding/admin-user
-Name:         admin-user
-Labels:       <none>
-Annotations:  <none>
-Role:
-  Kind:  ClusterRole
-  Name:  cluster-admin
-Subjects:
-  Kind            Name        Namespace
-  ----            ----        ---------
-  ServiceAccount  admin-user  kube-system
-```
-
-``` 
-[root@master ~]# kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
-Name:         admin-user-token-bzx4g
+[root@master1 kube-ansible]# kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+Name:         admin-token-l4976
 Namespace:    kube-system
 Labels:       <none>
-Annotations:  kubernetes.io/service-account.name=admin-user
-              kubernetes.io/service-account.uid=8ca63cd8-ba36-11e8-af28-0800278bc93f
+Annotations:  kubernetes.io/service-account.name=admin
+              kubernetes.io/service-account.uid=0283efe0-bba9-11e8-b412-0800278bc93f
 
 Type:  kubernetes.io/service-account-token
 
 Data
 ====
-ca.crt:     1025 bytes
+ca.crt:     1428 bytes
 namespace:  11 bytes
-token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWJ6eDRnIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI4Y2E2M2NkOC1iYTM2LTExZTgtYWYyOC0wODAwMjc4YmM5M2YiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.W7jJEqFUoycbhudoXWjStc6rV5FZDPlLK6RVmkNoevrLu9J-RBmqQ4oJDsODUO2WPFov3_Rdvu_4cG-_bf1bNRxRmo4aQryPe1nF1OC_YBHZEOiz_J8C0F3TTwYILZkuJ9fFZtcrmbDCBBUzGCaBTytxl3Ga5sdxAxiKgnT5oZs73Jcm_G8iE4B1o6hacdDREFeLDTeujhdk_0EhGtA0o9Iq6AnEJEypTjw9dRLHGlGTGz4ZwmqulJK_5QKMIU_3-jBEwlwDZxqTRxh3R4h6aGerXo9l2sEjoWtMPevU01KvwRkK1pxru-xwOX0mN2PCpcHh4cL7Pg9_EAXlJwjpKQ
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi10b2tlbi1sNDk3NiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJhZG1pbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjAyODNlZmUwLWJiYTktMTFlOC1iNDEyLTA4MDAyNzhiYzkzZiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbiJ9.CSaiovNKe_IJPPD1FcZ9XuNuAOz5Ugezg05TeGTwQyMT4nMGDqZVAF4028y3gYIPouQ8Ml9ixOR5B5dTLH7Mvhrk4qfD4HU7PkPHKih78xJBbmn8-1CQLDmnoq54a_WSfn7ciotiukspa7Lue2gxIZmTG8RR8W-qvOW5kRw4weSE69wVHRonAG8GtA4uMbqC0vdtjAElUaMXWZkS52quiOM9rRswU2Sd909PsGducrFuu5doZUqsMu-g-swPkj1-F_tojeztEm_BvINYiojg3RJXcg_u52-KyhRXH4D-qeAgX9bLsQVZQxQo5K8PAGPwCWeFeaj2t6osUBdZKcfKAQ
+
 ```
 
 <img src="/images/posts/kubernetes/p1.png">
