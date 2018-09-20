@@ -124,6 +124,8 @@ rtt min/avg/max/mdev = 0.313/0.458/0.664/0.144 ms
 sudo yum -y install epel-release
 sudo yum -y update
 sudo yum -y install ansible python-netaddr git cowsay
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+sudo swapoff -a
 ```
 
 vi /etc/ansible/ansible.cfg
