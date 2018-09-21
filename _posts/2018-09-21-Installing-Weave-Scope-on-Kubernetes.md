@@ -25,3 +25,5 @@ kube-system   kube-dns                           ClusterIP   10.96.0.10      <no
 weave         weave-scope-app                    ClusterIP   10.111.254.86   <none>        80/TCP          8m
 weave         weave-scope-app-545ffb956d-7x95x   ClusterIP   10.96.190.131   172.17.0.71   4040/TCP        7m
 ```
+
+<img src="/images/posts/docker/1.png">
