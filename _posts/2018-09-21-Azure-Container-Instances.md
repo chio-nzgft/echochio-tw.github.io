@@ -206,6 +206,9 @@ er-rzhr/providers/Microsoft.ContainerInstance/containerGroups/openshift-go-web",
   }
 ]
 ```
+
+<img src="/images/posts/docker/2.png">
+
 ```
 C:\Users\user>az container logs -g user-rzhr --name openshift-go-web
 ```
