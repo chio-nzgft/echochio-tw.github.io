@@ -39,7 +39,7 @@ C:\Users\user>az login -u user-rzhr@azurelabs.katacoda.com -p zzfRrho7VjtJzpC0
 ```
 
 ```
-C:\Users\user>az container create -g user-rzhr --name nginx  --image nginx:1.11 --ip-address public
+C:\Users\user>az container create -g user-rzhr --name nginx  --image nginx:1.11 --ip-address public --ports 80
 ```
 
 ```
