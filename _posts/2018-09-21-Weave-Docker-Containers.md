@@ -12,16 +12,6 @@ docker run -d --link redis:redis katacoda/redis-node-docker-example
 scope launch
 ```
 
-
-NOT in docker ...
-
-```
-sudo wget -O /usr/local/bin/scope \
-  https://github.com/weaveworks/scope/releases/download/latest_release/scope
-  sudo chmod a+x /usr/local/bin/scope
-  sudo scope launch
-```
-
 ```
 Unable to find image 'weaveworks/scope:1.6.5' locally
 1.6.5: Pulling from weaveworks/scope
@@ -46,3 +36,13 @@ Weave Scope is listening at the following URL(s) of host host01:
 
 
 <img src="/images/posts/docker/3.png">
+
+
+#NOT in docker ...
+
+```
+sudo wget -O /usr/local/bin/scope \
+  https://github.com/weaveworks/scope/releases/download/latest_release/scope
+  sudo chmod a+x /usr/local/bin/scope
+  sudo scope launch
+```
