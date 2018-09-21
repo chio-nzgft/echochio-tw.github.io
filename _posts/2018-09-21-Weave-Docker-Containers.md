@@ -41,8 +41,7 @@ Weave Scope is listening at the following URL(s) of host host01:
 #NOT in docker ...
 
 ```
-sudo wget -O /usr/local/bin/scope \
-  https://github.com/weaveworks/scope/releases/download/latest_release/scope
-  sudo chmod a+x /usr/local/bin/scope
-  sudo scope launch
+sudo wget -O /usr/local/bin/scope https://github.com/weaveworks/scope/releases/download/latest_release/scope
+sudo chmod a+x /usr/local/bin/scope
+sudo scope launch
 ```
