@@ -6,7 +6,7 @@ tags: docker
 ---
 
 #  Docker Containers on Boot with Systemd
-
+```
 $ sudo cat>>postgres.service<<EOF
 [Unit]
 Description=PostgreSQL container
@@ -22,14 +22,15 @@ ExecStop=/usr/bin/docker stop postgres
 [Install]
 WantedBy=multi-user.target
 EOF
+```
 
+```
 $ sudo cp postgres.service /etc/systemd/system
-
 $ sudo systemctl enable /etc/systemd/system/postgres.service
-
 $ sudo systemctl start postgres.service
-
 $ journalctl --no-pager -u postgres.service
+```
+```
 -- Logs begin at Sun 2017-03-19 23:02:17 UTC, end at Fri 2018-09-21 06:34:33 UTC. --
 Sep 21 06:32:52 6142f68ab944 systemd[1]: Starting PostgreSQL container...
 Sep 21 06:32:52 6142f68ab944 docker[1205]: Error response from daemon: No such container: postgres
@@ -86,3 +87,4 @@ Sep 21 06:32:54 6142f68ab944 docker[1213]: 2018-09-21 06:32:54.090 UTC [1] LOG: 
 Sep 21 06:32:54 6142f68ab944 docker[1213]: 2018-09-21 06:32:54.093 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
 Sep 21 06:32:54 6142f68ab944 docker[1213]: 2018-09-21 06:32:54.108 UTC [39] LOG:  database system was shut down at 2018-09-21 06:32:53 UTC
 Sep 21 06:32:54 6142f68ab944 docker[1213]: 2018-09-21 06:32:54.109 UTC [1] LOG:  database system is ready to accept connections
+```
